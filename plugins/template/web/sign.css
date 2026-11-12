@@ -1,0 +1,218 @@
+/*
+ * Template artwork — the sign's stylesheet for this plugin.
+ *
+ * The motion vocabulary lives here rather than in the SVG files, and that is
+ * the whole trick that makes animated templates possible at all: the same
+ * artwork is still exported to a flat JPEG by the media library, and
+ * `rasterize.ts` serializes the markup *without* the page's stylesheet. So an
+ * element marked `data-animate="rise"` moves on the sign and sits still in the
+ * export, from one file, with nothing to keep in step.
+ *
+ * A template opts in per element:
+ *
+ *   data-animate        rise · pop · fade · sweep · draw · drift · breathe · pulse
+ *   data-animate-delay  1–6, a step of 120ms, for staggering a group
+ *
+ * `draw` needs `pathLength="1"` on the path it is applied to.
+ *
+ * **Never put a `transform` attribute on an element carrying `data-animate`.**
+ * The motions below animate the `transform` property, and a CSS animation beats
+ * a presentation attribute outright — so the attribute is discarded for the
+ * whole life of the animation, not blended with it. A confetti rect written as
+ * `<rect transform="rotate(-18 …)" data-animate="drift">` sits tilted in the
+ * panel and snaps upright on the sign. Put placement on a wrapper `<g>` and the
+ * motion on the child.
+ *
+ * Entry animations are one-shot. A slide is on screen for fifteen or twenty
+ * seconds and then gone, so the arrival is the moment worth using; something
+ * looping for the whole dwell is a distraction on a wall people work next to.
+ * The continuous ones are deliberate exceptions: confetti that never moves is
+ * wallpaper, an alert that never moves is furniture, and `breathe` is slow
+ * enough at fourteen seconds to be felt rather than watched.
+ */
+
+.slide--tplart {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.tplart__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+ * Nothing below sets a static opacity or transform. An element's resting state
+ * has to be its normal one, so that a player with reduced motion — or an older
+ * one that ignores an animation altogether — shows finished artwork rather
+ * than a page of invisible text.
+ */
+@keyframes tplart-rise {
+  from {
+    opacity: 0;
+    transform: translateY(3vmin);
+  }
+}
+
+@keyframes tplart-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  60% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes tplart-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes tplart-sweep {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes tplart-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(1.6vmin) rotate(8deg);
+  }
+}
+
+/*
+ * A stroke that draws itself.
+ *
+ * Normalized by `pathLength="1"` on the path, so a short arc and a long one
+ * take the same time — without it the longest would still be creeping in while
+ * the shortest had finished, which reads as a stutter rather than a sweep.
+ *
+ * At rest there is no dashoffset, and `stroke-dasharray: 1` against a
+ * pathLength of 1 is one dash the whole length of the path. So an artwork that
+ * never animates is solid, not dotted.
+ */
+@keyframes tplart-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+/*
+ * The slow drift under everything else. Applied to a blurred *group* rather
+ * than to the shapes inside it: the blur is the expensive part, and moving the
+ * group lets the compositor reuse one blurred layer instead of re-rasterizing a
+ * 180-unit Gaussian every frame — which is the difference between this being
+ * free and it being unwatchable on a player.
+ */
+@keyframes tplart-breathe {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.05) translateY(-1.2vmin);
+  }
+}
+
+@keyframes tplart-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* `transform-box: fill-box` is what makes `transform-origin: center` mean the
+   element's own middle on an SVG child rather than the viewBox origin. */
+.tplart.is-animated [data-animate] {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-duration: 900ms;
+  animation-timing-function: cubic-bezier(0.22, 0.68, 0.36, 1);
+  animation-fill-mode: both;
+}
+
+.tplart.is-animated [data-animate='rise'] {
+  animation-name: tplart-rise;
+}
+
+.tplart.is-animated [data-animate='pop'] {
+  animation-name: tplart-pop;
+  animation-duration: 700ms;
+}
+
+.tplart.is-animated [data-animate='fade'] {
+  animation-name: tplart-fade;
+  animation-duration: 1200ms;
+}
+
+.tplart.is-animated [data-animate='sweep'] {
+  animation-name: tplart-sweep;
+  /* A rule grows from its own left edge, not its middle. */
+  transform-origin: left center;
+  animation-duration: 800ms;
+}
+
+.tplart.is-animated [data-animate='drift'] {
+  animation-name: tplart-drift;
+  animation-duration: 5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.tplart.is-animated [data-animate='pulse'] {
+  animation-name: tplart-pulse;
+  animation-duration: 2.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.tplart.is-animated [data-animate='draw'] {
+  animation-name: tplart-draw;
+  animation-duration: 1800ms;
+  stroke-dasharray: 1;
+}
+
+.tplart.is-animated [data-animate='breathe'] {
+  animation-name: tplart-breathe;
+  animation-duration: 14s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Staggering, so a group arrives as a sequence rather than a jump. Six steps
+   is as far as it goes: past about 700ms the last element lands after anyone
+   has finished reading the first. */
+.tplart.is-animated [data-animate-delay='1'] { animation-delay: 120ms; }
+.tplart.is-animated [data-animate-delay='2'] { animation-delay: 240ms; }
+.tplart.is-animated [data-animate-delay='3'] { animation-delay: 360ms; }
+.tplart.is-animated [data-animate-delay='4'] { animation-delay: 480ms; }
+.tplart.is-animated [data-animate-delay='5'] { animation-delay: 600ms; }
+.tplart.is-animated [data-animate-delay='6'] { animation-delay: 720ms; }
+
+/* Confetti drifting out of step is the point of confetti. */
+.tplart.is-animated [data-animate='drift'][data-animate-delay='1'] { animation-delay: -0.7s; }
+.tplart.is-animated [data-animate='drift'][data-animate-delay='2'] { animation-delay: -1.4s; }
+.tplart.is-animated [data-animate='drift'][data-animate-delay='3'] { animation-delay: -2.1s; }
+.tplart.is-animated [data-animate='drift'][data-animate-delay='4'] { animation-delay: -2.8s; }
+.tplart.is-animated [data-animate='drift'][data-animate-delay='5'] { animation-delay: -3.5s; }
+.tplart.is-animated [data-animate='drift'][data-animate-delay='6'] { animation-delay: -4.2s; }
+
+/* Someone has asked the room for less motion. The artwork still says what it
+   says — it just says it all at once. */
+@media (prefers-reduced-motion: reduce) {
+  .tplart.is-animated [data-animate] {
+    animation: none;
+  }
+}

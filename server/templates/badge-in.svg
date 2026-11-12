@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Please do this</title>
+  <desc>A big two-line ask with the reason underneath. For house rules that need saying without nagging.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#0b1020"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="150"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.4">
+    <circle cx="1620" cy="200" r="300" fill="#facc15"/>
+    <circle cx="200" cy="900" r="260" fill="#f97316" opacity="0.7"/>
+  </g>
+
+  <!-- badge -->
+  <g transform="translate(1420 540)">
+    <rect x="-190" y="-250" width="380" height="500" rx="34" fill="#f8fafc" fill-opacity="0.08" stroke="#facc15" stroke-opacity="0.55" stroke-width="3"/>
+    <rect x="-34" y="-300" width="68" height="70" rx="14" fill="none" stroke="#facc15" stroke-opacity="0.55" stroke-width="3"/>
+    <circle cx="0" cy="-90" r="66" fill="#facc15" fill-opacity="0.28"/>
+    <path d="M-96 78 A 96 116 0 0 1 96 78 Z" fill="#facc15" fill-opacity="0.28"/>
+    <rect x="-120" y="132" width="240" height="18" rx="9" fill="#f8fafc" fill-opacity="0.22"/>
+    <rect x="-80" y="176" width="160" height="18" rx="9" fill="#f8fafc" fill-opacity="0.14"/>
+  </g>
+
+  <!-- The badge art occupies x 1230 onwards, so the text column stops short of it. -->
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text x="150" y="356" fill="#facc15" font-size="32" font-weight="700" letter-spacing="12"
+          data-field="eyebrow" data-label="Kicker" data-fit="1030">A SMALL FAVOR</text>
+
+    <text x="146" y="512" fill="#f8fafc" font-size="150" font-weight="700" letter-spacing="-4"
+          data-field="headline" data-label="The ask" data-hint="Two lines of room. Short words carry furthest." data-fit="1030">Badge in.</text>
+    <text x="146" y="662" fill="#f8fafc" font-size="150" font-weight="700" letter-spacing="-4"
+          data-field="headline" data-fit="1030">Badge out.</text>
+
+    <text x="150" y="770" fill="#94a3b8" font-size="42"
+          data-field="body" data-label="Why" data-fit="1030">Tailgating through the door skips the fire roll call,</text>
+    <text x="150" y="828" fill="#94a3b8" font-size="42"
+          data-field="body" data-fit="1030">and the roll call is the only list that matters.</text>
+
+    <text x="150" y="928" fill="#94a3b8" font-size="34" opacity="0.7"
+          data-field="footnote" data-label="Footnote" data-fit="1030">Lost your card? Reception, sixth floor.</text>
+  </g>
+</svg>

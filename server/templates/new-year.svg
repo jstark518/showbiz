@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>New Year</title>
+  <desc>The year in numerals over a dark sky, with a line about what is ahead. For the last week of December and the first of January.</desc>
+
+  <!--
+    Dark, because fireworks on a white ground read as ink blots.
+
+    Each burst is one path holding eight subpaths rather than eight separate
+    lines: `draw` runs per element, so one path opens as a burst instead of
+    eight strokes racing each other to the edge.
+
+    Every transform here sits on a wrapper <g> and never on an element carrying
+    `data-animate`. The sign sets `transform-box: fill-box` on those, which
+    re-anchors a `transform` *attribute* as much as a CSS one — so a rotate
+    written into the attribute would land somewhere other than where the panel
+    draws it. Translate-only would survive; the wrapper makes it not depend on
+    remembering which.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#070b18"/>
+      <stop offset="1" stop-color="#151d38"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="190"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.3">
+    <circle data-animate="breathe" cx="1640" cy="180" r="320" fill="#fbbf24"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#fbbf24 #f472b6 #38bdf8 #a78bfa #4ade80 #f87171"/>
+    <circle data-animate="breathe" data-animate-delay="3" cx="260" cy="920" r="300" fill="#a78bfa"/>
+  </g>
+
+  <g stroke="#fbbf24" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.85"
+     data-paint-field="accent" data-paint="stroke">
+    <g transform="translate(300 230)">
+      <path data-animate="draw" pathLength="1"
+            d="M-40 0H-140M40 0H140M0 -40V-140M0 40V140M-28 -28L-99 -99M28 28L99 99M-28 28L-99 99M28 -28L99 -99"/>
+    </g>
+    <g transform="translate(1620 300) scale(0.72)">
+      <path data-animate="draw" data-animate-delay="2" pathLength="1"
+            d="M-40 0H-140M40 0H140M0 -40V-140M0 40V140M-28 -28L-99 -99M28 28L99 99M-28 28L-99 99M28 -28L99 -99"/>
+    </g>
+    <g transform="translate(1500 880) scale(0.5)">
+      <path data-animate="draw" data-animate-delay="4" pathLength="1"
+            d="M-40 0H-140M40 0H140M0 -40V-140M0 40V140M-28 -28L-99 -99M28 28L99 99M-28 28L-99 99M28 -28L99 -99"/>
+    </g>
+    <g transform="translate(390 780) scale(0.44)">
+      <path data-animate="draw" data-animate-delay="5" pathLength="1"
+            d="M-40 0H-140M40 0H140M0 -40V-140M0 40V140M-28 -28L-99 -99M28 28L99 99M-28 28L-99 99M28 -28L99 -99"/>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text data-animate="fade" x="960" y="270" font-size="36" font-weight="700" letter-spacing="16" fill="#fbbf24"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1400">HAPPY NEW YEAR</text>
+
+    <text data-animate="pop" data-animate-delay="1" x="960" y="600" font-size="300" font-weight="700" letter-spacing="-6" fill="#f8fafc"
+          data-field="year" data-label="The year"
+          data-hint="Big enough to read from the far end of the floor." data-fit="1400">2027</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="3" x="960" y="740" font-size="70" font-weight="600" fill="#e2e8f0"
+          data-field="headline" data-label="What is ahead"
+          data-hint="A sentence. It wraps across two lines." data-fit="1560">Back on Monday, and there is a lot</text>
+    <text data-animate="rise" data-animate-delay="4" x="960" y="820" font-size="70" font-weight="600" fill="#e2e8f0"
+          data-field="headline" data-fit="1560">to look forward to</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="960" y="930" font-size="38" fill="#94a3b8"
+          data-field="note" data-label="A line underneath" data-fit="1560">Thank you for a good year — from all of us here</text>
+  </g>
+</svg>

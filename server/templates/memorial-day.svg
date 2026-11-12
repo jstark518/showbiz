@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Memorial Day</title>
+  <desc>Quiet navy with a field of stars, for remembrance and the long weekend. Deliberately restrained — this one is not a party.</desc>
+
+  <!--
+    The restrained one of the patriotic three, and that is the whole brief. No
+    fireworks, no confetti, one slow motion and a single stripe of color. A
+    Memorial Day panel that looks like the Fourth of July gets the day wrong.
+
+    The stars fade in rather than pop: `pop` overshoots, which is cheerful, and
+    cheerful is the thing to avoid here.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#0a142e"/>
+      <stop offset="1" stop-color="#111f45"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="210"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.22">
+    <circle data-animate="breathe" cx="1660" cy="880" r="330" fill="#b91c1c"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#b91c1c #dc2626 #f8fafc #93c5fd #cbd5e1 #f59e0b"/>
+  </g>
+
+  <!--
+    A field of stars across the top, thinning as it falls. One path, placed and
+    scaled by its wrapper — the shape is a five-pointed star drawn at a nominal
+    40 units so every instance matches.
+  -->
+  <g fill="#e2e8f0" opacity="0.55">
+    <g transform="translate(180 150) scale(1.5)">
+      <path data-animate="fade" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(400 240) scale(1.1)">
+      <path data-animate="fade" data-animate-delay="1" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(640 130) scale(0.85)">
+      <path data-animate="fade" data-animate-delay="2" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(1280 160) scale(0.9)">
+      <path data-animate="fade" data-animate-delay="3" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(1520 250) scale(1.2)">
+      <path data-animate="fade" data-animate-delay="4" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(1760 140) scale(1.5)">
+      <path data-animate="fade" data-animate-delay="5" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(250 560) scale(0.7)" opacity="0.6">
+      <path data-animate="fade" data-animate-delay="6" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(1700 600) scale(0.7)" opacity="0.6">
+      <path data-animate="fade" data-animate-delay="6" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <rect data-animate="sweep" x="150" y="360" width="180" height="8" rx="4" fill="#b91c1c"
+          data-paint-field="accent" data-paint="fill"/>
+
+    <text data-animate="fade" data-animate-delay="1" x="150" y="450" font-size="34" font-weight="700" letter-spacing="14" fill="#93c5fd"
+          data-field="eyebrow" data-label="Kicker" data-fit="1300">MEMORIAL DAY</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="2" x="146" y="600" font-size="118" font-weight="700" letter-spacing="-3" fill="#f8fafc"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1620">In memory of those</text>
+    <text data-animate="rise" data-animate-delay="3" x="146" y="720" font-size="118" font-weight="700" letter-spacing="-3" fill="#f8fafc"
+          data-field="headline" data-fit="1620">who served</text>
+
+    <text data-animate="rise" data-animate-delay="4" x="150" y="830" font-size="44" font-weight="500" fill="#cbd5e1"
+          data-field="note" data-label="A line underneath" data-fit="1620">The office is closed Monday. We will be back Tuesday morning.</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="150" y="930" font-size="34" fill="#94a3b8"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1620">May 25, 2026</text>
+  </g>
+</svg>

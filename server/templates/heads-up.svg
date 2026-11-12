@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Heads up</title>
+  <desc>A short warning with a date and what to do about it. For a closure, a maintenance window, an elevator out of service.</desc>
+
+  <!--
+    The dark one of this batch, and the only template where the accent is doing
+    a job rather than setting a mood: amber for "plan around this", red for
+    "this affects you today". So the picker leads with those two rather than
+    the usual six.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#131c31"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="190"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.35">
+    <circle cx="1620" cy="200" r="330" fill="#f59e0b"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#f59e0b #ef4444 #38bdf8 #4ade80 #a78bfa #f472b6"/>
+  </g>
+
+  <!-- The bar down the left edge, full height: this one has no rounded corner
+       to overshoot, so it runs the whole side deliberately. -->
+  <rect x="0" y="0" width="26" height="1080" fill="#f59e0b"
+        data-paint-field="accent" data-paint="fill"/>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <g>
+      <rect x="150" y="150" width="330" height="86" rx="43" fill="#f59e0b" fill-opacity="0.18"
+            stroke="#f59e0b" stroke-opacity="0.5" stroke-width="2"
+            data-paint-field="accent" data-paint="fill stroke"/>
+      <text data-animate="pulse" x="315" y="207" font-size="34" font-weight="700" letter-spacing="8" text-anchor="middle"
+            fill="#f59e0b" data-paint-field="accent" data-paint="fill"
+            data-field="eyebrow" data-label="Badge" data-fit="290">HEADS UP</text>
+    </g>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" x="146" y="450" fill="#f8fafc" font-size="140" font-weight="700" letter-spacing="-4"
+          data-field="headline" data-label="What is happening"
+          data-hint="Short enough to read at a glance. It wraps across two lines." data-fit="1620">The elevators are out</text>
+    <text data-animate="rise" data-animate-delay="1" x="146" y="590" fill="#f8fafc" font-size="140" font-weight="700" letter-spacing="-4"
+          data-field="headline" data-fit="1620">on Thursday</text>
+
+    <text data-animate="rise" data-animate-delay="2" x="150" y="700" fill="#f59e0b" font-size="48" font-weight="600"
+          data-paint-field="accent" data-paint="fill"
+          data-field="when" data-type="date" data-label="When" data-part="date"
+          data-fit="1620">November 5, 2026</text>
+
+    <text data-animate="rise" data-animate-delay="3" x="150" y="800" fill="#cbd5e1" font-size="44"
+          data-field="detail" data-label="What to do about it" data-fit="1620">Use the west stairs. Anything heavy, ask at the desk first.</text>
+
+    <text x="150" y="960" fill="#94a3b8" font-size="34"
+          data-field="footnote" data-label="Footnote" data-fit="1620">Building management · back to normal Friday morning</text>
+  </g>
+</svg>

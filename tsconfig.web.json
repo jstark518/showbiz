@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["es2020", "dom", "dom.iterable"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["vite/client"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    "composite": true
+  },
+  // The mirror of tsconfig.server.json: plugins in, their `server/` half out,
+  // so fastify and postgres.js never reach a browser project.
+  "include": [
+    "web/src/**/*.ts",
+    "web/src/**/*.tsx",
+    "shared/**/*.ts",
+    "vite.config.ts",
+    "plugins/**/*.ts",
+    "plugins/**/*.tsx"
+  ],
+  "exclude": ["plugins/**/server/**"]
+}

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Labor Day</title>
+  <desc>Amber on slate with work stripes, for the long weekend at the end of summer. Mostly a closure notice that does not look like one.</desc>
+
+  <!--
+    No fireworks and no flag: Labor Day on an office wall is a closure notice
+    with a nod to why. So the artwork is work — stripes and a hard hat — and the
+    date and the "back Tuesday" line get as much room as the greeting.
+
+    The stripes sweep from the left because that is the edge they start at;
+    `sweep` grows from `transform-origin: left center` for exactly this.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#1f2937"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.3">
+    <circle data-animate="breathe" cx="1600" cy="820" r="330" fill="#f59e0b"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#f59e0b #fbbf24 #38bdf8 #4ade80 #f87171 #a78bfa"/>
+  </g>
+
+  <!-- The hard hat, top right. One shape at a nominal 88 units wide. -->
+  <g transform="translate(1580 260) scale(3.1)">
+    <g data-animate="pop" data-animate-delay="2" fill="#f59e0b" data-paint-field="accent" data-paint="fill" opacity="0.9">
+      <path d="M-32 8c0-22 14-36 32-36s32 14 32 36z"/>
+      <rect x="-44" y="10" width="88" height="11" rx="5.5"/>
+    </g>
+    <path data-animate="draw" data-animate-delay="3" pathLength="1" d="M0-28V8" stroke="#111827" stroke-width="4" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- Work stripes down the left, thinning as they fall. -->
+  <g opacity="0.85">
+    <rect data-animate="sweep" x="150" y="200" width="360" height="12" rx="6" fill="#f59e0b"
+          data-paint-field="accent" data-paint="fill"/>
+    <rect data-animate="sweep" data-animate-delay="1" x="150" y="228" width="240" height="12" rx="6" fill="#f59e0b"
+          data-paint-field="accent" data-paint="fill" opacity="0.6"/>
+    <rect data-animate="sweep" data-animate-delay="2" x="150" y="256" width="140" height="12" rx="6" fill="#f59e0b"
+          data-paint-field="accent" data-paint="fill" opacity="0.35"/>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text data-animate="fade" data-animate-delay="1" x="150" y="380" font-size="34" font-weight="700" letter-spacing="14" fill="#f59e0b"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1200">LABOR DAY</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="2" x="146" y="540" font-size="132" font-weight="700" letter-spacing="-4" fill="#f9fafb"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1400">Take the long</text>
+    <text data-animate="rise" data-animate-delay="3" x="146" y="672" font-size="132" font-weight="700" letter-spacing="-4" fill="#f9fafb"
+          data-field="headline" data-fit="1400">weekend</text>
+
+    <text data-animate="rise" data-animate-delay="4" x="150" y="790" font-size="46" font-weight="500" fill="#e5e7eb"
+          data-field="note" data-label="A line underneath" data-fit="1620">The office is closed Monday. Back Tuesday, same as ever.</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="150" y="890" font-size="36" fill="#9ca3af"
+          data-field="detail" data-label="A quieter line" data-fit="1620">Thank you for the work that got us here.</text>
+
+    <text data-animate="fade" data-animate-delay="6" x="150" y="960" font-size="32" fill="#6b7280"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1620">September 7, 2026</text>
+  </g>
+</svg>

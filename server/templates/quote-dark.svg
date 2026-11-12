@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>A quote, dark</title>
+  <desc>The same quote layout on a dark background, for a panel in a bright room or a loop of dark slides it needs to sit inside.</desc>
+
+  <!--
+    A twin of quote.svg rather than a setting on it. A paint field sets one
+    value on the elements it names, and a theme is not one value: the
+    background, the body, the attribution and the footnote all move, and two of
+    them move in the opposite direction to the others.
+
+    Keep the two in step. If the layout changes here it changes there — only
+    the palette differs.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#131c31"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.3">
+    <circle cx="180" cy="980" r="340" fill="#38bdf8"/>
+  </g>
+
+  <g font-family="Georgia, 'Times New Roman', serif">
+    <text data-animate="fade" x="150" y="330" font-size="300" font-weight="700" fill="#38bdf8" fill-opacity="0.45"
+          data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+          data-paint-swatch="#38bdf8 #4ade80 #facc15 #f87171 #a78bfa #f472b6">&#8220;</text>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <!-- Three elements, one field: the panel wraps what you type across them. -->
+    <text data-animate="rise" data-animate-delay="1" x="146" y="424" fill="#f8fafc" font-size="82" font-weight="600" letter-spacing="-1"
+          data-field="quote" data-label="The quote"
+          data-hint="Keep it to a sentence. It wraps across three lines on its own." data-fit="1620">The new sign in reception is the first thing</text>
+    <text data-animate="rise" data-animate-delay="2" x="146" y="540" fill="#f8fafc" font-size="82" font-weight="600" letter-spacing="-1"
+          data-field="quote" data-fit="1620">visitors mention, before anyone has said</text>
+    <text data-animate="rise" data-animate-delay="3" x="146" y="656" fill="#f8fafc" font-size="82" font-weight="600" letter-spacing="-1"
+          data-field="quote" data-fit="1620">a word to them.</text>
+
+    <rect data-animate="sweep" data-animate-delay="4" x="150" y="760" width="180" height="8" rx="4" fill="#38bdf8"
+          data-paint-field="accent" data-paint="fill"/>
+
+    <text data-animate="fade" data-animate-delay="5" x="150" y="860" fill="#e2e8f0" font-size="48" font-weight="600"
+          data-field="attribution" data-label="Who said it" data-fit="1620">Priya Raman</text>
+    <text data-animate="fade" data-animate-delay="6" x="150" y="918" fill="#94a3b8" font-size="34"
+          data-field="role" data-label="Their role, or where it came from" data-fit="1620">Office manager · after the first week</text>
+  </g>
+</svg>

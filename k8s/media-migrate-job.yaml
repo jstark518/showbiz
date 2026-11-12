@@ -1,0 +1,77 @@
+# One-off: copy the uploads already on the sign-media PVC into MinIO.
+#
+# NOT applied by CI. `.gitlab-ci.yml` names the files it applies, and a Job is
+# the wrong shape for a thing that runs on every push — its pod template is
+# immutable, so a second apply of a changed Job fails, and an unchanged one
+# quietly does nothing. Run it by hand, once:
+#
+#   kubectl apply -f k8s/media-migrate-job.yaml
+#   kubectl -n sign logs -f job/sign-media-migrate
+#   kubectl -n sign delete job sign-media-migrate
+#
+# Do this *before* the deploy that switches S3_BUCKET on, or between the two if
+# you would rather have a moment where uploads are visibly missing than a
+# moment where a new upload lands somewhere the old pod cannot read.
+#
+# `mc mirror` is idempotent — it skips objects already present with the same
+# size — so running it twice is safe, and running it again after the switch
+# catches anything uploaded in between.
+#
+# The PVC is ReadWriteOnce and the app pod holds it. Scale the deployment to
+# zero first, or this Job will sit Pending on Multi-Attach:
+#
+#   kubectl -n sign scale deploy/sign --replicas=0
+#
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sign-media-migrate
+  namespace: sign
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001 # the PVC was written by this uid
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: mirror
+          # Placeholder for the same reason as k8s/sign.yaml. This job is run by
+          # hand, so substitute it on the way in — see README.md:
+          #   sed "s|__MC_IMAGE__|$MC_IMAGE|" k8s/media-migrate-job.yaml | kubectl apply -f -
+          image: __MC_IMAGE__
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          command: ["sh", "-c"]
+          args:
+            - |
+              set -eu
+              echo "objects on the volume: $(ls -1 /data/media | wc -l)"
+              mc alias set minio "$S3_ENDPOINT" "$S3_ACCESS_KEY_ID" "$S3_SECRET_ACCESS_KEY"
+              mc mirror --overwrite /data/media "minio/$S3_BUCKET"
+              echo "objects in the bucket: $(mc ls "minio/$S3_BUCKET" | wc -l)"
+          env:
+            - { name: S3_ENDPOINT, value: "http://minio.minio.svc:9000" }
+            - { name: S3_BUCKET, value: "sign" }
+            # mc writes its config here, and the root filesystem is read-only.
+            - { name: MC_CONFIG_DIR, value: /tmp/mc }
+            - name: S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef: { name: sign-s3, key: ACCESS_KEY_ID }
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef: { name: sign-s3, key: ACCESS_SECRET_KEY }
+          volumeMounts:
+            - { name: media, mountPath: /data/media, readOnly: true }
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: media
+          persistentVolumeClaim: { claimName: sign-media }
+        - name: tmp
+          emptyDir: {}

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Three numbers</title>
+  <desc>Three stat cards under a heading. Each card is tinted a mood: green, blue, yellow.</desc>
+
+  <!--
+    The mood is the card, not a stripe down its side.
+    
+    An 8-wide bar is invisible from across a room, which is the only distance
+    this artwork is ever read from, and it had nowhere to end: run to the card's
+    full height and it overshoots the rounded corners, inset it far enough to
+    clear them and it reads as a stub. Tinting the fill and the outline says the
+    same thing louder and leaves nothing to align.
+
+    The type is sized to the box rather than by eye. Measured natural widths of
+    the longest default in each row set the budget: 48 of padding either side
+    leaves 404, which fits the value at 114 and the note at 30. At the old 130
+    the value ran 11 past the card's right edge, which is what made the text
+    look unaligned. data-fit carries the same 404 so anything typed in the panel
+    is shrunk to the same column.
+
+    Vertically the block is centered on its real box heights, not its font
+    sizes: 67 above and 67 below, with gaps of 20 and 18.
+  -->
+  <!--
+    The accent bars are inset 30 vertically to match the cards' corner radius,
+    so each one spans the straight part of its card's left edge. At the card's
+    full height they overshot the rounded corners and hung in open space.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="150"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.35">
+    <circle cx="960" cy="1120" r="420" fill="#38bdf8"/>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text x="150" y="184" fill="#38bdf8" font-size="30" font-weight="700" letter-spacing="12"
+          data-field="eyebrow" data-label="Kicker" data-fit="1620">THIS QUARTER SO FAR</text>
+    <text x="146" y="290" fill="#f8fafc" font-size="92" font-weight="700" letter-spacing="-2"
+          data-field="headline" data-label="Heading" data-fit="1620">How we are doing</text>
+
+    <g>
+      <rect x="150" y="400" width="500" height="380" rx="30" fill="#4ade80" fill-opacity="0.07" stroke="#4ade80" stroke-opacity="0.4" stroke-width="2"
+            data-paint-field="mood1" data-paint="fill stroke" data-paint-label="First card color"
+            data-paint-swatch="#4ade80 #38bdf8 #facc15 #f87171 #a78bfa #f472b6"/>
+      <text x="198" y="496" fill="#94a3b8" font-size="30" font-weight="700" letter-spacing="6"
+            data-field="label1" data-label="First card · label" data-fit="404">UPTIME</text>
+      <text x="198" y="635" fill="#f8fafc" font-size="114" font-weight="700"
+            data-field="value1" data-label="First card · number" data-hint="Include the unit, e.g. 99.98% or £14k." data-fit="404">99.98%</text>
+      <text x="198" y="706" fill="#4ade80" font-size="30" font-weight="600"
+            data-field="note1" data-paint-field="mood1" data-label="First card · note" data-fit="404">Above target for 11 weeks</text>
+    </g>
+
+    <g>
+      <rect x="710" y="400" width="500" height="380" rx="30" fill="#38bdf8" fill-opacity="0.07" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="2"
+            data-paint-field="mood2" data-paint="fill stroke" data-paint-label="Second card color"
+            data-paint-swatch="#4ade80 #38bdf8 #facc15 #f87171 #a78bfa #f472b6"/>
+      <text x="758" y="496" fill="#94a3b8" font-size="30" font-weight="700" letter-spacing="6"
+            data-field="label2" data-label="Second card · label" data-fit="404">DEPLOYS</text>
+      <text x="758" y="635" fill="#f8fafc" font-size="114" font-weight="700"
+            data-field="value2" data-label="Second card · number" data-fit="404">142</text>
+      <text x="758" y="706" fill="#38bdf8" font-size="30" font-weight="600"
+            data-field="note2" data-paint-field="mood2" data-label="Second card · note" data-fit="404">Nine a week, zero rollbacks</text>
+    </g>
+
+    <g>
+      <rect x="1270" y="400" width="500" height="380" rx="30" fill="#facc15" fill-opacity="0.07" stroke="#facc15" stroke-opacity="0.4" stroke-width="2"
+            data-paint-field="mood3" data-paint="fill stroke" data-paint-label="Third card color"
+            data-paint-swatch="#4ade80 #38bdf8 #facc15 #f87171 #a78bfa #f472b6"/>
+      <text x="1318" y="496" fill="#94a3b8" font-size="30" font-weight="700" letter-spacing="6"
+            data-field="label3" data-label="Third card · label" data-fit="404">SUPPORT NPS</text>
+      <text x="1318" y="635" fill="#f8fafc" font-size="114" font-weight="700"
+            data-field="value3" data-label="Third card · number" data-fit="404">61</text>
+      <text x="1318" y="706" fill="#facc15" font-size="30" font-weight="600"
+            data-field="note3" data-paint-field="mood3" data-label="Third card · note" data-fit="404">Down 4 · worth a look</text>
+    </g>
+
+    <text x="150" y="920" fill="#94a3b8" font-size="34" opacity="0.8"
+          data-field="footnote" data-label="Footnote" data-fit="1620">Figures to the end of last week</text>
+  </g>
+</svg>

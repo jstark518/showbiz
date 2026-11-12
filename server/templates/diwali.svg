@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Diwali</title>
+  <desc>A row of lit diyas and a rangoli in gold on deep indigo. The festival of lights, so the artwork is the lights.</desc>
+
+  <!--
+    Lamps along the bottom edge rather than scattered: diyas are set out in a
+    line on a doorstep, and a row also keeps the whole middle of the frame free
+    for text.
+
+    The rangoli is rings of dots rather than drawn petals — at the size a wall
+    panel shows it, a detailed pattern turns into a gray disc, and dots stay
+    legible all the way down.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#3b0764"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="190"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.34">
+    <circle data-animate="breathe" cx="960" cy="1020" r="360" fill="#fbbf24"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#fbbf24 #fb923c #f472b6 #a78bfa #fde68a #ef4444"/>
+  </g>
+
+  <!-- The rangoli, behind the headline. Two rings of dots and two rules. -->
+  <g transform="translate(960 470)" opacity="0.28">
+    <g fill="none" stroke="#fbbf24" stroke-width="4" data-paint-field="accent" data-paint="stroke">
+      <path data-animate="draw" pathLength="1" d="M0-210a210 210 0 1 1 0 420a210 210 0 1 1 0-420z"/>
+      <path data-animate="draw" data-animate-delay="2" pathLength="1" d="M0-120a120 120 0 1 1 0 240a120 120 0 1 1 0-240z"/>
+    </g>
+    <g fill="#fbbf24" data-paint-field="accent" data-paint="fill">
+      <g data-animate="fade" data-animate-delay="3">
+        <circle cx="150" cy="0" r="9"/><circle cx="129.9" cy="75" r="9"/><circle cx="75" cy="129.9" r="9"/>
+        <circle cx="0" cy="150" r="9"/><circle cx="-75" cy="129.9" r="9"/><circle cx="-129.9" cy="75" r="9"/>
+        <circle cx="-150" cy="0" r="9"/><circle cx="-129.9" cy="-75" r="9"/><circle cx="-75" cy="-129.9" r="9"/>
+        <circle cx="0" cy="-150" r="9"/><circle cx="75" cy="-129.9" r="9"/><circle cx="129.9" cy="-75" r="9"/>
+      </g>
+      <g data-animate="fade" data-animate-delay="5">
+        <circle cx="90" cy="0" r="6"/><circle cx="63.6" cy="63.6" r="6"/><circle cx="0" cy="90" r="6"/>
+        <circle cx="-63.6" cy="63.6" r="6"/><circle cx="-90" cy="0" r="6"/><circle cx="-63.6" cy="-63.6" r="6"/>
+        <circle cx="0" cy="-90" r="6"/><circle cx="63.6" cy="-63.6" r="6"/>
+      </g>
+    </g>
+  </g>
+
+  <!--
+    Five diyas along the bottom. One shape at a nominal 68 units wide; the
+    flames pulse on their own delays so the row flickers rather than blinks.
+  -->
+  <g>
+    <g transform="translate(300 950) scale(1.5)">
+      <g data-animate="rise" data-animate-delay="1">
+        <path fill="#fbbf24" data-paint-field="accent" data-paint="fill" d="M-30 0c0 16 14 26 30 26S30 16 30 0z"/>
+        <rect x="-34" y="-7" width="68" height="11" rx="5.5" fill="#f59e0b"/>
+        <path data-animate="pulse" data-animate-delay="1" fill="#fde68a" d="M0-8c7-10 5-22 0-30-5 8-7 20 0 30z"/>
+      </g>
+    </g>
+    <g transform="translate(630 990) scale(1.9)">
+      <g data-animate="rise" data-animate-delay="2">
+        <path fill="#fbbf24" data-paint-field="accent" data-paint="fill" d="M-30 0c0 16 14 26 30 26S30 16 30 0z"/>
+        <rect x="-34" y="-7" width="68" height="11" rx="5.5" fill="#f59e0b"/>
+        <path data-animate="pulse" data-animate-delay="3" fill="#fde68a" d="M0-8c7-10 5-22 0-30-5 8-7 20 0 30z"/>
+      </g>
+    </g>
+    <g transform="translate(960 1010) scale(2.2)">
+      <g data-animate="rise" data-animate-delay="3">
+        <path fill="#fbbf24" data-paint-field="accent" data-paint="fill" d="M-30 0c0 16 14 26 30 26S30 16 30 0z"/>
+        <rect x="-34" y="-7" width="68" height="11" rx="5.5" fill="#f59e0b"/>
+        <path data-animate="pulse" fill="#fde68a" d="M0-8c7-10 5-22 0-30-5 8-7 20 0 30z"/>
+      </g>
+    </g>
+    <g transform="translate(1290 990) scale(1.9)">
+      <g data-animate="rise" data-animate-delay="4">
+        <path fill="#fbbf24" data-paint-field="accent" data-paint="fill" d="M-30 0c0 16 14 26 30 26S30 16 30 0z"/>
+        <rect x="-34" y="-7" width="68" height="11" rx="5.5" fill="#f59e0b"/>
+        <path data-animate="pulse" data-animate-delay="5" fill="#fde68a" d="M0-8c7-10 5-22 0-30-5 8-7 20 0 30z"/>
+      </g>
+    </g>
+    <g transform="translate(1620 950) scale(1.5)">
+      <g data-animate="rise" data-animate-delay="5">
+        <path fill="#fbbf24" data-paint-field="accent" data-paint="fill" d="M-30 0c0 16 14 26 30 26S30 16 30 0z"/>
+        <rect x="-34" y="-7" width="68" height="11" rx="5.5" fill="#f59e0b"/>
+        <path data-animate="pulse" data-animate-delay="2" fill="#fde68a" d="M0-8c7-10 5-22 0-30-5 8-7 20 0 30z"/>
+      </g>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text data-animate="fade" x="960" y="270" font-size="36" font-weight="700" letter-spacing="16" fill="#fbbf24"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1400">HAPPY DIWALI</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="960" y="440" font-size="128" font-weight="700" letter-spacing="-4" fill="#faf5ff"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1560">Wishing you light</text>
+    <text data-animate="rise" data-animate-delay="2" x="960" y="568" font-size="128" font-weight="700" letter-spacing="-4" fill="#faf5ff"
+          data-field="headline" data-fit="1560">over darkness</text>
+
+    <text data-animate="rise" data-animate-delay="3" x="960" y="680" font-size="46" font-weight="500" fill="#e9d5ff"
+          data-field="note" data-label="A line underneath" data-fit="1560">Sweets in the kitchen all afternoon — everyone is welcome</text>
+
+    <text data-animate="fade" data-animate-delay="4" x="960" y="770" font-size="34" fill="#c4b5fd"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1560">November 8, 2026</text>
+  </g>
+</svg>

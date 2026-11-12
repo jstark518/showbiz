@@ -1,0 +1,43 @@
+{
+  "name": "shwobiz",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Digital signage slideshow for BrightSign players, with a web control panel",
+  "scripts": {
+    "dev": "concurrently -n server,web -c cyan,magenta \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:server": "tsx watch server/src/index.ts",
+    "dev:web": "vite",
+    "build": "npm run build:web && npm run build:server",
+    "build:web": "vite build",
+    "build:server": "esbuild server/src/index.ts --bundle --platform=node --format=esm --target=node22 --packages=external --outfile=dist/server/index.js",
+    "start": "node dist/server/index.js",
+    "typecheck": "tsc --noEmit -p tsconfig.server.json && tsc --noEmit -p tsconfig.web.json"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1167.0",
+    "@aws-sdk/lib-storage": "3.1167.0",
+    "@fastify/cors": "11.4.1",
+    "@fastify/multipart": "10.1.8",
+    "@fastify/static": "10.1.10",
+    "fastify": "5.12.8",
+    "postgres": "3.4.9",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "concurrently": "10.0.7",
+    "esbuild": "0.28.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vite": "8.3.8"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

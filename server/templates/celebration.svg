@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Celebration</title>
+  <desc>Confetti, a headline and a date. For a work anniversary, a birthday, a launch, or anything that deserves the whole wall for twenty seconds.</desc>
+
+  <!--
+    Light, because confetti on a dark ground reads as a fault on the panel
+    rather than as a party.
+
+    The confetti is drawn, not an image: everything in these files has to be
+    self-contained. A template that referenced an external asset would taint
+    the canvas the panel rasterizes through, and `toBlob` would throw instead
+    of producing a JPEG.
+
+    Only some of the pieces take the accent. All of them following the picker
+    turns confetti into a monochrome pattern, which is the one thing confetti
+    should never be.
+
+    Each piece's rotation sits on a wrapper <g> and not on the rect itself. The
+    sign animates `transform` for `drift`, and a CSS animation overrides the
+    `transform` *attribute* outright — so a rotation written on the animated
+    element is discarded the moment the slide appears, and a scatter of tilted
+    confetti flattens into a row of upright bricks.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f3f0fb"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.18">
+    <circle data-animate="drift" data-animate-delay="2" cx="240" cy="140" r="300" fill="#a78bfa"/>
+    <circle data-animate="drift" data-animate-delay="3" cx="1700" cy="960" r="300" fill="#f472b6"/>
+  </g>
+
+  <g opacity="0.9">
+    <g transform="rotate(-18 163 146)">
+      <rect data-animate="drift" data-animate-delay="4" x="150" y="120" width="26" height="52" rx="6" fill="#a78bfa"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#a78bfa #38bdf8 #4ade80 #facc15 #f472b6 #f87171"/>
+    </g>
+    <g transform="rotate(24 1722 204)">
+      <rect data-animate="drift" data-animate-delay="5" x="1710" y="180" width="24" height="48" rx="6" fill="#a78bfa"
+            data-paint-field="accent" data-paint="fill"/>
+    </g>
+    <g transform="rotate(35 442 904)">
+      <rect data-animate="drift" data-animate-delay="6" x="430" y="880" width="24" height="48" rx="6" fill="#a78bfa"
+            data-paint-field="accent" data-paint="fill"/>
+    </g>
+    <g transform="rotate(-28 1533 846)">
+      <rect data-animate="drift" data-animate-delay="1" x="1520" y="820" width="26" height="52" rx="6" fill="#a78bfa"
+            data-paint-field="accent" data-paint="fill"/>
+    </g>
+
+    <g transform="rotate(32 331 242)">
+      <rect data-animate="drift" data-animate-delay="2" x="320" y="220" width="22" height="44" rx="5" fill="#f472b6"/>
+    </g>
+    <g transform="rotate(-14 1591 352)">
+      <rect data-animate="drift" data-animate-delay="3" x="1580" y="330" width="22" height="44" rx="5" fill="#facc15"/>
+    </g>
+    <g transform="rotate(48 261 662)">
+      <rect data-animate="drift" data-animate-delay="4" x="250" y="640" width="22" height="44" rx="5" fill="#38bdf8"/>
+    </g>
+    <g transform="rotate(12 1671 642)">
+      <rect data-animate="drift" data-animate-delay="5" x="1660" y="620" width="22" height="44" rx="5" fill="#4ade80"/>
+    </g>
+    <g transform="rotate(-40 630 170)">
+      <rect data-animate="drift" data-animate-delay="6" x="620" y="150" width="20" height="40" rx="5" fill="#38bdf8"/>
+    </g>
+    <g transform="rotate(20 1290 160)">
+      <rect data-animate="drift" data-animate-delay="1" x="1280" y="140" width="20" height="40" rx="5" fill="#4ade80"/>
+    </g>
+    <g transform="rotate(-22 770 950)">
+      <rect data-animate="drift" data-animate-delay="2" x="760" y="930" width="20" height="40" rx="5" fill="#facc15"/>
+    </g>
+    <g transform="rotate(41 1140 970)">
+      <rect data-animate="drift" data-animate-delay="3" x="1130" y="950" width="20" height="40" rx="5" fill="#f472b6"/>
+    </g>
+
+    <circle data-animate="drift" data-animate-delay="4" cx="500" cy="330" r="12" fill="#facc15"/>
+    <circle data-animate="drift" data-animate-delay="5" cx="1450" cy="220" r="14" fill="#f472b6"/>
+    <circle data-animate="drift" data-animate-delay="6" cx="360" cy="820" r="13" fill="#4ade80"/>
+    <circle data-animate="drift" data-animate-delay="1" cx="1600" cy="720" r="11" fill="#38bdf8"/>
+    <circle data-animate="drift" data-animate-delay="2" cx="880" cy="140" r="11" fill="#f87171"/>
+    <circle data-animate="drift" data-animate-delay="3" cx="1040" cy="960" r="13" fill="#38bdf8"/>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text data-animate="fade" x="960" y="300" font-size="36" font-weight="700" letter-spacing="14" fill="#a78bfa"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1500">CELEBRATING</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="960" y="500" fill="#0f172a" font-size="150" font-weight="700" letter-spacing="-4"
+          data-field="headline" data-label="What we are celebrating"
+          data-hint="A name and the occasion. It wraps across two lines." data-fit="1620">Five years of</text>
+    <text data-animate="rise" data-animate-delay="2" x="960" y="650" fill="#0f172a" font-size="150" font-weight="700" letter-spacing="-4"
+          data-field="headline" data-fit="1620">Sam Okafor</text>
+
+    <text data-animate="rise" data-animate-delay="3" x="960" y="760" fill="#334155" font-size="48" font-weight="500"
+          data-field="note" data-label="A line underneath" data-fit="1500">Joined as our second engineer and never let the build stay red</text>
+
+    <text data-animate="fade" data-animate-delay="4" x="960" y="860" fill="#64748b" font-size="36"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-hint="The day it happened, written out in full." data-fit="1500">November 3, 2026</text>
+  </g>
+</svg>

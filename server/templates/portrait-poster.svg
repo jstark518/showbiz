@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+  <title>Portrait poster</title>
+  <desc>A tall notice for a panel hung the other way up. Everything is centered.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="130"/>
+    </filter>
+  </defs>
+
+  <rect width="1080" height="1350" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.45">
+    <circle cx="880" cy="240" r="260" fill="#38bdf8"/>
+    <circle cx="180" cy="1140" r="240" fill="#6366f1"/>
+  </g>
+
+  <rect x="70" y="70" width="940" height="1210" rx="28" fill="none" stroke="#f8fafc" stroke-opacity="0.16" stroke-width="2"/>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text x="540" y="230" fill="#38bdf8" font-size="30" font-weight="700" letter-spacing="12"
+          data-field="eyebrow" data-label="Kicker" data-fit="820">EVERY FRIDAY</text>
+
+    <text x="540" y="430" fill="#f8fafc" font-size="140" font-weight="700" letter-spacing="-3"
+          data-field="headline" data-label="Headline" data-fit="820">Lunch</text>
+    <text x="540" y="570" fill="#f8fafc" font-size="140" font-weight="700" letter-spacing="-3"
+          data-field="headline" data-fit="820">and learn</text>
+
+    <rect x="340" y="640" width="400" height="5" fill="#38bdf8" opacity="0.7"/>
+
+    <text x="540" y="790" fill="#94a3b8" font-size="46"
+          data-field="detail" data-label="Time and place" data-fit="820">12:30 · Kitchen, sixth floor</text>
+    <text x="540" y="866" fill="#94a3b8" font-size="46"
+          data-field="detail" data-fit="820">Food arrives at 12:15</text>
+
+    <text x="540" y="1040" fill="#f8fafc" font-size="54" font-weight="600"
+          data-field="topic" data-label="This week" data-fit="840">This week: how the sign works</text>
+    <text x="540" y="1120" fill="#94a3b8" font-size="40" opacity="0.8"
+          data-field="note" data-label="Note" data-fit="840">Bring a laptop if you want to follow along</text>
+
+    <text x="540" y="1230" fill="#94a3b8" font-size="30" letter-spacing="6" opacity="0.6"
+          data-field="footnote" data-label="Footnote" data-hint="Leave empty to drop it." data-fit="820"></text>
+  </g>
+</svg>

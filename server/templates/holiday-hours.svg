@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Holiday hours</title>
+  <desc>Plain, colorable, and named by you. The one to reach for when the holiday has no artwork of its own — Presidents' Day, Indigenous Peoples' Day, a company day off.</desc>
+
+  <!--
+    The catch-all, and the reason the set does not need a file per federal
+    holiday. Everything decorative here is one accent away from being a
+    different day, and nothing on it names a season, so it is as correct in
+    February as it is in October.
+
+    Two dates rather than one: "closed from" and "open again" is the pair
+    everyone actually stops to read, and a single date leaves the second
+    question unanswered on a wall nobody can reply to.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.32">
+    <circle data-animate="breathe" cx="1660" cy="240" r="330" fill="#38bdf8"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#38bdf8 #4ade80 #fbbf24 #f472b6 #a78bfa #ef4444"/>
+    <circle data-animate="breathe" data-animate-delay="3" cx="260" cy="900" r="290" fill="#38bdf8"
+            data-paint-field="accent" data-paint="fill"/>
+  </g>
+
+  <!-- Full-height bar down the left edge, like the Heads up template. -->
+  <rect x="0" y="0" width="26" height="1080" fill="#38bdf8" data-paint-field="accent" data-paint="fill"/>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <g>
+      <rect data-animate="pop" x="150" y="150" width="420" height="86" rx="43" fill="#38bdf8" fill-opacity="0.16"
+            stroke="#38bdf8" stroke-opacity="0.5" stroke-width="2"
+            data-paint-field="accent" data-paint="fill stroke"/>
+      <text data-animate="fade" data-animate-delay="1" x="360" y="207" font-size="34" font-weight="700" letter-spacing="8" text-anchor="middle"
+            fill="#38bdf8" data-paint-field="accent" data-paint="fill"
+            data-field="badge" data-label="Badge" data-fit="380">OFFICE CLOSED</text>
+    </g>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="146" y="440" font-size="150" font-weight="700" letter-spacing="-4" fill="#f8fafc"
+          data-field="headline" data-label="Which holiday"
+          data-hint="Name the day. It wraps across two lines." data-fit="1620">Presidents' Day</text>
+    <text data-animate="rise" data-animate-delay="2" x="146" y="590" font-size="150" font-weight="700" letter-spacing="-4" fill="#f8fafc"
+          data-field="headline" data-fit="1620"></text>
+
+    <!-- The pair of dates, side by side, each with its own small label. -->
+    <g>
+      <text data-animate="fade" data-animate-delay="3" x="150" y="700" font-size="28" font-weight="700" letter-spacing="6" fill="#94a3b8"
+            data-field="closedLabel" data-label="Label over the first date" data-fit="640">CLOSED</text>
+      <text data-animate="rise" data-animate-delay="3" x="150" y="778" font-size="60" font-weight="600" fill="#38bdf8"
+            data-paint-field="accent" data-paint="fill"
+            data-field="closedOn" data-type="date" data-label="Closed on" data-part="date"
+            data-fit="640">February 16, 2026</text>
+
+      <text data-animate="fade" data-animate-delay="4" x="900" y="700" font-size="28" font-weight="700" letter-spacing="6" fill="#94a3b8"
+            data-field="openLabel" data-label="Label over the second date" data-fit="640">OPEN AGAIN</text>
+      <text data-animate="rise" data-animate-delay="4" x="900" y="778" font-size="60" font-weight="600" fill="#f8fafc"
+            data-field="openOn" data-type="date" data-label="Open again on" data-part="date"
+            data-fit="640">February 17, 2026</text>
+    </g>
+
+    <rect data-animate="sweep" data-animate-delay="5" x="150" y="850" width="1620" height="3" rx="1.5" fill="#38bdf8" fill-opacity="0.4"
+          data-paint-field="accent" data-paint="fill"/>
+
+    <text data-animate="fade" data-animate-delay="6" x="150" y="940" font-size="38" fill="#cbd5e1"
+          data-field="note" data-label="A line underneath" data-fit="1620">Anything urgent goes to the on-call number in the handbook.</text>
+  </g>
+</svg>

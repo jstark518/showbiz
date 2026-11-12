@@ -1,0 +1,91 @@
+/*
+ * Data table — the sign's stylesheet for this plugin.
+ *
+ * Loaded by the slide renderer, which means it lands after `sign.css` and can
+ * lean on the variables and the `.slide` base it defines. Everything here is
+ * namespaced to the plugin, so nothing in it can reach another slide type.
+ */
+
+.slide--table {
+  padding: 5vmin 6vmin;
+  gap: 2.5vmin;
+}
+
+.table__heading {
+  margin: 0;
+  font-size: 5.5vmin;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/*
+ * The one scrolling region on this slide, and only when a table overflows a
+ * short panel. `.sign-body` blocks scrolling everywhere else, so this opts back
+ * in the same way the Jira issue list does.
+ */
+.table__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 3vmin;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th {
+  font-weight: 700;
+  font-size: 2.4vmin;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sign-muted);
+  border-bottom: 0.3vmin solid var(--sign-line);
+}
+
+.table__cell {
+  padding: 1.6vmin 2vmin;
+  /* Cells wrap rather than truncate: a rota entry cut off mid-name is worse
+     than a table that runs to a second line. */
+  overflow-wrap: anywhere;
+}
+
+.table__cell--left {
+  text-align: left;
+}
+
+.table__cell--center {
+  text-align: center;
+}
+
+.table__cell--right {
+  text-align: right;
+}
+
+/* The first column reads as the label for its row, so it carries the weight. */
+.table td.table__cell:first-child {
+  font-weight: 600;
+}
+
+.table tbody tr {
+  border-bottom: 0.15vmin solid var(--sign-line);
+}
+
+.table--striped tbody tr:nth-child(even) {
+  background: var(--sign-panel);
+}
+
+/*
+ * Shown when `maxRows` cut the table short. Without it the sign silently
+ * claims a five-row table is the whole thing, which is the kind of quiet lie
+ * a wall panel should not tell.
+ */
+.table__more {
+  margin: 0;
+  font-size: 2.2vmin;
+  color: var(--sign-muted);
+}

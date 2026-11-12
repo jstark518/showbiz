@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Slide preview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+  </head>
+  <!--
+    Framed by the control panel, never opened directly.
+
+    It exists as its own document because the sign is sized in `vmin`, and
+    viewport units inside a div — or inside a shadow root — resolve against the
+    whole browser window, not the box you have put them in. An iframe is the
+    only container with a viewport of its own, so it is the only way to preview
+    a 1920×1080 panel at a quarter of the size and have the type come out at
+    the right proportion.
+  -->
+  <body class="sign-body">
+    <div id="root"></div>
+    <script type="module" src="/src/preview/main.tsx"></script>
+  </body>
+</html>

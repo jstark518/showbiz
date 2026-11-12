@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Statement</title>
+  <desc>Artwork and one big sentence. Empty every field and it is a plain backdrop.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="0.5" stop-color="#132043"/>
+      <stop offset="1" stop-color="#0b1020"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="180"/>
+    </filter>
+    <linearGradient id="fadeA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="fadeB" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </linearGradient>
+    <!-- One row of the dot grid; a plain <g> here would also paint at 0,0. -->
+    <g id="row">
+      <circle cx="0" cy="0" r="3"/><circle cx="60" cy="0" r="3"/><circle cx="120" cy="0" r="3"/>
+      <circle cx="180" cy="0" r="3"/><circle cx="240" cy="0" r="3"/><circle cx="300" cy="0" r="3"/>
+      <circle cx="360" cy="0" r="3"/><circle cx="420" cy="0" r="3"/><circle cx="480" cy="0" r="3"/>
+      <circle cx="540" cy="0" r="3"/><circle cx="600" cy="0" r="3"/><circle cx="660" cy="0" r="3"/>
+    </g>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+
+  <g data-animate="breathe" filter="url(#soft)" opacity="0.5">
+    <circle cx="420" cy="300" r="340" fill="#6366f1"/>
+    <circle cx="1520" cy="760" r="380" fill="#0ea5e9"/>
+    <circle cx="1140" cy="120" r="240" fill="#22d3ee" opacity="0.7"/>
+  </g>
+
+  <!-- concentric arc field -->
+  <g fill="none" stroke="url(#fadeA)" stroke-width="3" stroke-linecap="round" opacity="0.8">
+    <path pathLength="1" data-animate="draw" data-animate-delay="1" d="M-40 900 A 700 700 0 0 1 660 200"/>
+    <path pathLength="1" data-animate="draw" data-animate-delay="2" d="M-40 980 A 820 820 0 0 1 780 160"/>
+    <path pathLength="1" data-animate="draw" data-animate-delay="3" d="M-40 1060 A 940 940 0 0 1 900 120"/>
+    <path pathLength="1" data-animate="draw" data-animate-delay="4" d="M-40 1140 A 1060 1060 0 0 1 1020 80"/>
+  </g>
+
+  <g fill="none" stroke="url(#fadeB)" stroke-width="3" stroke-linecap="round" opacity="0.7">
+    <path pathLength="1" data-animate="draw" data-animate-delay="5" d="M1960 200 A 640 640 0 0 0 1320 840"/>
+    <path pathLength="1" data-animate="draw" data-animate-delay="6" d="M1960 120 A 760 760 0 0 0 1200 880"/>
+    <path pathLength="1" data-animate="draw" data-animate-delay="6" d="M1960 40 A 880 880 0 0 0 1080 920"/>
+  </g>
+
+  <!-- Dot grid. Quieter than it was, because words now sit over it. -->
+  <g data-animate="fade" data-animate-delay="4" fill="#f8fafc" opacity="0.1">
+    <use href="#row" x="630" y="180"/>
+    <use href="#row" x="630" y="240"/>
+    <use href="#row" x="630" y="300"/>
+    <use href="#row" x="630" y="360"/>
+    <use href="#row" x="630" y="420"/>
+    <use href="#row" x="630" y="480"/>
+    <use href="#row" x="630" y="540"/>
+    <use href="#row" x="630" y="600"/>
+    <use href="#row" x="630" y="660"/>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text data-animate="fade" data-animate-delay="2" x="960" y="360" fill="#38bdf8" font-size="32" font-weight="700" letter-spacing="14"
+          data-field="eyebrow" data-label="Kicker" data-fit="1500">FROM THE TEAM</text>
+
+    <text data-animate="rise" data-animate-delay="3" x="960" y="560" fill="#f8fafc" font-size="132" font-weight="700" letter-spacing="-3"
+          data-field="headline" data-label="Statement" data-hint="Wraps across two lines on its own." data-fit="1500">Thank you for a</text>
+    <text data-animate="rise" data-animate-delay="4" x="960" y="700" fill="#f8fafc" font-size="132" font-weight="700" letter-spacing="-3"
+          data-field="headline" data-fit="1500">very good quarter</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="960" y="840" fill="#94a3b8" font-size="44"
+          data-field="footnote" data-label="Line underneath" data-fit="1500">Every one of you moved something forward</text>
+  </g>
+</svg>

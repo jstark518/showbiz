@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Valentine's Day</title>
+  <desc>Floating hearts on a blush ground, with room for a thank you. Light, and deliberately more fond than romantic — it is going on an office wall.</desc>
+
+  <!--
+    Light. A dark Valentine's panel reads as a warning, which is the opposite of
+    the message.
+
+    The hearts float on `drift` and are sized down toward the middle of the
+    frame, so the eye is pushed to the text rather than around the border. Only
+    some of them take the accent: all of them following the picker turns a
+    scatter into a repeating pattern.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#fff5f7"/>
+      <stop offset="1" stop-color="#fee2e8"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.24">
+    <circle data-animate="breathe" cx="250" cy="180" r="300" fill="#fb7185"/>
+    <circle data-animate="breathe" data-animate-delay="3" cx="1690" cy="920" r="300" fill="#f472b6"/>
+  </g>
+
+  <!--
+    One heart path, placed and scaled by its wrapper. Drawn once at a nominal
+    28 units wide so every instance is the same shape at a different size.
+  -->
+  <g opacity="0.9">
+    <g transform="translate(230 300) scale(3.4)">
+      <path data-animate="drift" data-animate-delay="2" fill="#fb7185"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Heart color"
+            data-paint-swatch="#fb7185 #f472b6 #ef4444 #f87171 #e879f9 #fda4af"
+            d="M0 12C-4 6-14-1-14-9c0-7 6-11 11-9 1 1 3 3 3 4 0-1 2-3 3-4 5-2 11 2 11 9 0 8-10 15-14 21z"/>
+    </g>
+    <g transform="translate(1700 260) scale(2.8)">
+      <path data-animate="drift" data-animate-delay="4" fill="#fb7185"
+            data-paint-field="accent" data-paint="fill"
+            d="M0 12C-4 6-14-1-14-9c0-7 6-11 11-9 1 1 3 3 3 4 0-1 2-3 3-4 5-2 11 2 11 9 0 8-10 15-14 21z"/>
+    </g>
+    <g transform="translate(1620 760) scale(2.2)">
+      <path data-animate="drift" data-animate-delay="6" fill="#f472b6"
+            d="M0 12C-4 6-14-1-14-9c0-7 6-11 11-9 1 1 3 3 3 4 0-1 2-3 3-4 5-2 11 2 11 9 0 8-10 15-14 21z"/>
+    </g>
+    <g transform="translate(300 820) scale(2.4)">
+      <path data-animate="drift" data-animate-delay="1" fill="#f472b6"
+            d="M0 12C-4 6-14-1-14-9c0-7 6-11 11-9 1 1 3 3 3 4 0-1 2-3 3-4 5-2 11 2 11 9 0 8-10 15-14 21z"/>
+    </g>
+    <g transform="translate(560 190) scale(1.4)">
+      <path data-animate="drift" data-animate-delay="3" fill="#fda4af"
+            d="M0 12C-4 6-14-1-14-9c0-7 6-11 11-9 1 1 3 3 3 4 0-1 2-3 3-4 5-2 11 2 11 9 0 8-10 15-14 21z"/>
+    </g>
+    <g transform="translate(1360 180) scale(1.2)">
+      <path data-animate="drift" data-animate-delay="5" fill="#fda4af"
+            d="M0 12C-4 6-14-1-14-9c0-7 6-11 11-9 1 1 3 3 3 4 0-1 2-3 3-4 5-2 11 2 11 9 0 8-10 15-14 21z"/>
+    </g>
+    <g transform="translate(830 950) scale(1.3)">
+      <path data-animate="drift" data-animate-delay="4" fill="#fda4af"
+            d="M0 12C-4 6-14-1-14-9c0-7 6-11 11-9 1 1 3 3 3 4 0-1 2-3 3-4 5-2 11 2 11 9 0 8-10 15-14 21z"/>
+    </g>
+    <g transform="translate(1130 960) scale(1.1)">
+      <path data-animate="drift" data-animate-delay="2" fill="#fda4af"
+            d="M0 12C-4 6-14-1-14-9c0-7 6-11 11-9 1 1 3 3 3 4 0-1 2-3 3-4 5-2 11 2 11 9 0 8-10 15-14 21z"/>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text data-animate="fade" x="960" y="330" font-size="36" font-weight="700" letter-spacing="16" fill="#fb7185"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1400">HAPPY VALENTINE'S DAY</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="960" y="510" font-size="128" font-weight="700" letter-spacing="-4" fill="#4c0519"
+          data-field="headline" data-label="The message"
+          data-hint="Fond rather than romantic reads better on an office wall. It wraps across two lines." data-fit="1560">We rather like</text>
+    <text data-animate="rise" data-animate-delay="2" x="960" y="640" font-size="128" font-weight="700" letter-spacing="-4" fill="#4c0519"
+          data-field="headline" data-fit="1560">working with you</text>
+
+    <text data-animate="rise" data-animate-delay="3" x="960" y="750" font-size="46" font-weight="500" fill="#881337"
+          data-field="note" data-label="A line underneath" data-fit="1560">There are cupcakes in the kitchen until they run out</text>
+
+    <text data-animate="fade" data-animate-delay="4" x="960" y="850" font-size="34" fill="#9f1239"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1560">February 14, 2026</text>
+  </g>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Two facts</title>
+  <desc>A heading over two labelled boxes. Guest Wi-Fi, a door code, a phone number and an extension — anything that comes in a pair.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#111a33"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="170"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.4">
+    <circle cx="300" cy="180" r="300" fill="#38bdf8"/>
+    <circle cx="1700" cy="980" r="320" fill="#22d3ee"/>
+  </g>
+
+  <!-- wifi mark -->
+  <g transform="translate(960 250)" fill="none" stroke="#38bdf8" stroke-linecap="round" stroke-width="22">
+    <path d="M-190 -30 A 270 270 0 0 1 190 -30" opacity="0.35"/>
+    <path d="M-124 34 A 176 176 0 0 1 124 34" opacity="0.65"/>
+    <path d="M-58 98 A 82 82 0 0 1 58 98"/>
+  </g>
+  <circle cx="960" cy="158" r="19" fill="#38bdf8"/>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text x="960" y="470" fill="#f8fafc" font-size="96" font-weight="700" letter-spacing="-2"
+          data-field="headline" data-label="Heading" data-fit="1500">Guest Wi-Fi</text>
+
+    <g>
+      <rect x="360" y="560" width="540" height="290" rx="28" fill="#94a3b8" fill-opacity="0.12" stroke="#94a3b8" stroke-opacity="0.25" stroke-width="2"/>
+      <text x="630" y="642" fill="#94a3b8" font-size="30" font-weight="700" letter-spacing="8"
+            data-field="leftLabel" data-label="Left box · label" data-fit="470">NETWORK</text>
+      <text x="630" y="748" fill="#f8fafc" font-size="71" font-weight="600"
+            data-field="leftValue" data-label="Left box · value" data-fit="500">shwobiz-guest</text>
+    </g>
+
+    <g>
+      <rect x="1020" y="560" width="540" height="290" rx="28" fill="#94a3b8" fill-opacity="0.12" stroke="#94a3b8" stroke-opacity="0.25" stroke-width="2"/>
+      <text x="1290" y="642" fill="#94a3b8" font-size="30" font-weight="700" letter-spacing="8"
+            data-field="rightLabel" data-label="Right box · label" data-fit="470">PASSWORD</text>
+      <text x="1290" y="752" fill="#38bdf8" font-size="72" font-weight="700" font-family="Menlo, Consolas, monospace" letter-spacing="2"
+            data-field="rightValue" data-label="Right box · value" data-hint="Set in a monospace face, so a password reads unambiguously from across the room." data-fit="500">tealotter41</text>
+    </g>
+
+    <text x="960" y="952" fill="#94a3b8" font-size="34"
+          data-field="footnote" data-label="Footnote" data-fit="1600">No login page · Ask at reception if it will not connect</text>
+  </g>
+</svg>

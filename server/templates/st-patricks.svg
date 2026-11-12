@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>St. Patrick's Day</title>
+  <desc>Shamrocks and green, with a line about whatever is happening. For March 17 and the Friday nearest it.</desc>
+
+  <!--
+    Deep green rather than the bright one: a saturated Kelly green across an
+    entire wall panel is genuinely hard to look at for twenty seconds, and the
+    shamrocks carry the color better against something darker.
+
+    A shamrock is three circles and a stem, drawn once and placed by wrappers.
+    Three circles at 120 degrees, not four — a four-leaf clover is a different
+    thing and someone will notice.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#052e16"/>
+      <stop offset="1" stop-color="#0b3f22"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.34">
+    <circle data-animate="breathe" cx="1660" cy="240" r="330" fill="#4ade80"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#4ade80 #86efac #fbbf24 #38bdf8 #a3e635 #ffffff"/>
+    <circle data-animate="breathe" data-animate-delay="3" cx="240" cy="880" r="290" fill="#fbbf24"/>
+  </g>
+
+  <g opacity="0.85">
+    <g transform="translate(1650 290) scale(3.2)">
+      <g data-animate="drift" data-animate-delay="1" fill="#4ade80" data-paint-field="accent" data-paint="fill">
+        <circle cx="0" cy="-12" r="11"/>
+        <circle cx="10.4" cy="6" r="11"/>
+        <circle cx="-10.4" cy="6" r="11"/>
+        <path d="M0 10c1 8 0 14-4 20" stroke="#4ade80" stroke-width="3.5" fill="none" stroke-linecap="round"
+              data-paint-field="accent" data-paint="stroke"/>
+      </g>
+    </g>
+    <g transform="translate(1740 810) scale(2.4)">
+      <g data-animate="drift" data-animate-delay="4" fill="#4ade80" data-paint-field="accent" data-paint="fill">
+        <circle cx="0" cy="-12" r="11"/>
+        <circle cx="10.4" cy="6" r="11"/>
+        <circle cx="-10.4" cy="6" r="11"/>
+        <path d="M0 10c1 8 0 14-4 20" stroke="#4ade80" stroke-width="3.5" fill="none" stroke-linecap="round"
+              data-paint-field="accent" data-paint="stroke"/>
+      </g>
+    </g>
+    <g transform="translate(1330 940) scale(1.4)" opacity="0.7">
+      <g data-animate="drift" data-animate-delay="6" fill="#86efac">
+        <circle cx="0" cy="-12" r="11"/>
+        <circle cx="10.4" cy="6" r="11"/>
+        <circle cx="-10.4" cy="6" r="11"/>
+      </g>
+    </g>
+    <g transform="translate(1420 150) scale(1.3)" opacity="0.7">
+      <g data-animate="drift" data-animate-delay="2" fill="#86efac">
+        <circle cx="0" cy="-12" r="11"/>
+        <circle cx="10.4" cy="6" r="11"/>
+        <circle cx="-10.4" cy="6" r="11"/>
+      </g>
+    </g>
+    <g transform="translate(1500 570) scale(1.1)" opacity="0.6">
+      <g data-animate="drift" data-animate-delay="5" fill="#86efac">
+        <circle cx="0" cy="-12" r="11"/>
+        <circle cx="10.4" cy="6" r="11"/>
+        <circle cx="-10.4" cy="6" r="11"/>
+      </g>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text data-animate="fade" x="150" y="330" font-size="36" font-weight="700" letter-spacing="14" fill="#4ade80"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1250">ST. PATRICK'S DAY</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="146" y="500" font-size="136" font-weight="700" letter-spacing="-4" fill="#f0fdf4"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1250">Wear green,</text>
+    <text data-animate="rise" data-animate-delay="2" x="146" y="638" font-size="136" font-weight="700" letter-spacing="-4" fill="#f0fdf4"
+          data-field="headline" data-fit="1250">or explain yourself</text>
+
+    <rect data-animate="sweep" data-animate-delay="3" x="150" y="710" width="220" height="8" rx="4" fill="#4ade80"
+          data-paint-field="accent" data-paint="fill"/>
+
+    <text data-animate="rise" data-animate-delay="4" x="150" y="820" font-size="46" font-weight="500" fill="#bbf7d0"
+          data-field="note" data-label="A line underneath" data-fit="1250">Soda bread in the kitchen from eleven, while it lasts</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="150" y="920" font-size="34" fill="#86efac"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1250">March 17, 2026</text>
+  </g>
+</svg>

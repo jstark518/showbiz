@@ -1,0 +1,37 @@
+# Postgres for the sign, managed by the CloudNativePG operator (installed once
+# into cnpg-system; see the cluster's deploying-a-new-app runbook). Do not run a
+# Postgres pod of your own here.
+#
+# CNPG auto-creates:
+#   Service `sign-pg-rw`   — always the primary
+#   Secret  `sign-pg-app`  — keys: username/password/dbname/host/port/uri/jdbc-uri
+#
+# The Deployment reads `sign-pg-app` key `uri` as $DATABASE_URL, which is the
+# same postgres:// string the compose file builds by hand locally. The app's own
+# numbered migrations in server/migrations run at boot against whatever it finds,
+# so there is nothing to bootstrap here beyond the empty database.
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: sign-pg
+  namespace: sign
+spec:
+  # 2 = primary + hot standby. A single instance's -primary PDB (minAvailable:1)
+  # can never be evicted, so a node drain or Talos upgrade hangs on it forever;
+  # a standby lets the drain fail over and proceed.
+  instances: 2
+  imageName: ghcr.io/cloudnative-pg/postgresql:17
+
+  storage:
+    # Block storage, correct single-attach semantics for a database.
+    size: 10Gi
+    storageClass: ceph-rbd
+
+  bootstrap:
+    initdb:
+      database: sign
+      owner: sign
+
+  resources:
+    requests: { cpu: 50m, memory: 128Mi }
+    limits: { memory: 256Mi }

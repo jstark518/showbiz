@@ -1,0 +1,626 @@
+/*
+ * Sign styling. Everything is sized in `vmin`/`vw` so the same build fills a
+ * 1080p landscape panel, a portrait panel and a browser window without a
+ * media query per size. Type is deliberately large: this is read from across
+ * a room, not from a desk.
+ */
+
+:root {
+  --sign-bg: #0b1020;
+  --sign-fg: #f8fafc;
+  --sign-muted: #94a3b8;
+  --sign-panel: rgba(148, 163, 184, 0.12);
+  --sign-line: rgba(148, 163, 184, 0.25);
+  --sign-accent: #38bdf8;
+  --status-todo: #94a3b8;
+  --status-in_progress: #38bdf8;
+  --status-done: #4ade80;
+  --status-unknown: #64748b;
+  /* The scrim behind the bottom nav bar, so chips stay legible over any slide. */
+  --sign-scrim: 2, 6, 23;
+  --sign-chip: rgba(248, 250, 252, 0.1);
+  --sign-chip-line: rgba(248, 250, 252, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.sign-body {
+  overflow: hidden;
+  background: var(--sign-bg);
+  /* A sign is not a document: nothing here should be selectable, draggable,
+     highlighted on tap, or able to bounce-scroll under a stray finger. */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  /*
+   * A mouse arrow parked in the middle of a wall display looks like a fault, so
+   * the sign hides it — but only where there is no mouse to hide. `any-pointer:
+   * fine` is true on a desktop browser and false on a player driven by a
+   * touchscreen or by nothing at all, so opening the sign on a laptop to set it
+   * up keeps a usable cursor without any setting to remember.
+   *
+   * It is written as hide-by-default plus an opt-out rather than the reverse
+   * because a player old enough not to understand the query should still hide
+   * the pointer.
+   */
+  cursor: none;
+}
+
+@media (any-pointer: fine) {
+  .sign-body {
+    cursor: auto;
+  }
+}
+
+.sign {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--sign-bg);
+  color: var(--sign-fg);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 2.2vmin;
+  line-height: 1.4;
+}
+
+.sign--light {
+  --sign-bg: #f8fafc;
+  --sign-fg: #0f172a;
+  --sign-muted: #475569;
+  --sign-panel: rgba(15, 23, 42, 0.06);
+  --sign-line: rgba(15, 23, 42, 0.15);
+  --status-todo: #64748b;
+  --status-unknown: #94a3b8;
+  --sign-scrim: 248, 250, 252;
+  --sign-chip: rgba(15, 23, 42, 0.07);
+  --sign-chip-line: rgba(15, 23, 42, 0.14);
+}
+
+/* --- stage and transitions ------------------------------------------------ */
+
+/* Moved directly by useSlideshow while a swipe is in progress. */
+.sign__drag {
+  position: absolute;
+  inset: 0;
+}
+
+.sign__stage {
+  position: absolute;
+  inset: 0;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+}
+
+.sign__stage--fade {
+  animation-name: sign-fade-in;
+}
+
+.sign__stage--slide {
+  animation-name: sign-slide-in;
+}
+
+.sign__stage--none {
+  animation: none;
+}
+
+@keyframes sign-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sign-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(6%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Respect a player configured for reduced motion, and drop the cost of
+   compositing large animated layers on weaker hardware. */
+@media (prefers-reduced-motion: reduce) {
+  .sign__stage {
+    animation: none;
+  }
+  .sign__progress {
+    display: none;
+  }
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  transition: padding-bottom 250ms ease;
+}
+
+/*
+ * The nav bar covers the bottom of the screen while it is open, which was
+ * burying the "Tap for detail" button and the "Due soon" strip under the
+ * transport controls. Slides that lay out in normal flow give up that strip
+ * for as long as the bar is up.
+ *
+ * Image and video are excluded: their media is meant to fill the panel, and a
+ * caption is positioned rather than in flow, so it slides up on its own.
+ */
+.sign.is-navigating .slide:not(.slide--image):not(.slide--video) {
+  padding-bottom: 13vmin;
+}
+
+/* --- image and video ------------------------------------------------------ */
+
+.slide--image,
+.slide--video {
+  background: #000;
+}
+
+.slide__media {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.slide__media--cover {
+  object-fit: cover;
+}
+
+.slide__media--contain {
+  object-fit: contain;
+}
+
+.slide__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 4vmin 5vmin 5vmin;
+  font-size: 3.4vmin;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+  transition: transform 250ms ease;
+}
+
+/*
+ * A caption sits exactly where the nav bar opens, so it moves up out of the
+ * way while the bar is on screen rather than being read through the buttons.
+ */
+.sign.is-navigating .slide__caption {
+  transform: translateY(-11vmin);
+}
+
+/* --- placeholder ---------------------------------------------------------- */
+
+.slide--placeholder {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6vmin;
+}
+
+.placeholder__heading {
+  margin: 0 0 1.5vmin;
+  font-size: 5vmin;
+  font-weight: 700;
+}
+
+.placeholder__detail {
+  margin: 0;
+  font-size: 2.8vmin;
+  color: var(--sign-muted);
+}
+
+
+
+/* --- chrome: clock, name, offline dot, progress bar ----------------------- */
+
+.sign__clock,
+.sign__name {
+  position: absolute;
+  top: 2.5vmin;
+  font-size: 2.4vmin;
+  font-weight: 600;
+  color: var(--sign-fg);
+  opacity: 0.75;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.sign__clock {
+  right: 3vmin;
+}
+
+.sign__name {
+  left: 3vmin;
+  opacity: 0.55;
+}
+
+.sign__offline {
+  position: absolute;
+  bottom: 2vmin;
+  right: 2vmin;
+  width: 1.4vmin;
+  height: 1.4vmin;
+  border-radius: 50%;
+  background: #f87171;
+  box-shadow: 0 0 1.5vmin rgba(248, 113, 113, 0.8);
+  animation: sign-pulse 2s ease-in-out infinite;
+}
+
+@keyframes sign-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.sign__progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /* Above the nav bar's scrim, so the timer stays readable while it is open. */
+  z-index: 7;
+  height: 0.5vmin;
+  background: var(--sign-accent);
+  opacity: 0.8;
+  animation-name: sign-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+
+@keyframes sign-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* --- bottom nav bar ------------------------------------------------------- */
+
+/*
+ * Spacing here uses margins rather than flex `gap`: the player's Chromium can
+ * predate gap-in-flexbox (Chrome 84), and a bar whose items all collapse into
+ * one another is worse than a couple of extra margin rules.
+ */
+
+.sign-nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  padding: 5vmin 2.4vmin 2.4vmin;
+  background: linear-gradient(
+    to top,
+    rgba(var(--sign-scrim), 0.94) 0%,
+    rgba(var(--sign-scrim), 0.78) 45%,
+    rgba(var(--sign-scrim), 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+}
+
+.sign-nav.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sign-nav__transport {
+  display: flex;
+  flex: none;
+  margin-right: 2.4vmin;
+}
+
+.sign-nav__button {
+  width: 8vmin;
+  height: 8vmin;
+  margin-right: 1.2vmin;
+  border-radius: 50%;
+  border: 1px solid var(--sign-chip-line);
+  background: var(--sign-chip);
+  color: var(--sign-fg);
+  font-size: 3.2vmin;
+  line-height: 1;
+  cursor: pointer;
+  /* Comfortably larger than the ~9mm minimum for a reliable finger target. */
+  touch-action: manipulation;
+}
+
+.sign-nav__button:last-child {
+  margin-right: 0;
+}
+
+.sign-nav__button:active {
+  background: var(--sign-accent);
+  color: #0b1020;
+}
+
+.sign-nav__track {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: stretch;
+  /* The one horizontal scroller on the sign, for playlists too long to fit. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.sign-nav__track::-webkit-scrollbar {
+  display: none;
+}
+
+.sign-nav__chip {
+  display: flex;
+  align-items: center;
+  flex: none;
+  max-width: 30vmin;
+  margin-right: 1.2vmin;
+  padding: 1.4vmin 2vmin;
+  border: 1px solid var(--sign-chip-line);
+  border-radius: 1.6vmin;
+  background: var(--sign-chip);
+  color: var(--sign-fg);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.sign-nav__chip:last-child {
+  margin-right: 0;
+}
+
+.sign-nav__chip.is-current {
+  border-color: var(--sign-accent);
+  background: rgba(56, 189, 248, 0.22);
+}
+
+.sign-nav__icon {
+  width: 3.4vmin;
+  height: 3.4vmin;
+  flex: none;
+  margin-right: 1.4vmin;
+  opacity: 0.85;
+}
+
+.sign-nav__chip.is-current .sign-nav__icon {
+  color: var(--sign-accent);
+  opacity: 1;
+}
+
+.sign-nav__text {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sign-nav__title {
+  display: block;
+  font-size: 2.2vmin;
+  font-weight: 600;
+  line-height: 1.2;
+  /* One line, clipped — a chip that wraps changes the height of the whole bar. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sign-nav__kind {
+  display: block;
+  font-size: 1.7vmin;
+  color: var(--sign-muted);
+  white-space: nowrap;
+}
+
+.sign-nav__chip.is-current .sign-nav__kind {
+  color: var(--sign-fg);
+  opacity: 0.75;
+}
+
+/* --- scheduled dark ------------------------------------------------------- */
+
+/*
+ * True black rather than `--sign-bg`, which is a very dark navy. This is the
+ * screen pretending to be off, and a panel glowing faintly blue in a dark
+ * office does not read as off — it reads as broken. It also gives an emissive
+ * panel the one state where it draws nothing at all.
+ *
+ * Empty, so there is nothing to burn in over a fourteen-hour night.
+ */
+.sign--asleep {
+  background: #000;
+  cursor: none;
+}
+
+/* --- messages ------------------------------------------------------------- */
+
+.sign--message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sign__message {
+  color: var(--sign-muted);
+  font-size: 3vmin;
+}
+
+.sign__message h1 {
+  color: var(--sign-fg);
+  font-size: 6vmin;
+  margin: 0 0 1.5vmin;
+}
+
+.sign__message code {
+  background: var(--sign-panel);
+  padding: 0.3em 0.6em;
+  border-radius: 0.4em;
+  font-size: 0.9em;
+}
+
+
+/* --- drill-in overlay ----------------------------------------------------- */
+
+.drill {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  background: var(--sign-bg);
+  animation: drill-in 220ms ease-out both;
+}
+
+@keyframes drill-in {
+  from {
+    opacity: 0;
+    transform: translateX(3%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.drill__bar {
+  display: flex;
+  align-items: center;
+  gap: 2vmin;
+  padding: 1.6vmin 3vmin;
+  border-bottom: 1px solid var(--sign-line);
+  flex-shrink: 0;
+}
+
+.drill__back,
+.drill__close,
+.drill__action {
+  border: 1px solid var(--sign-line);
+  border-radius: 0.8vmin;
+  background: var(--sign-panel);
+  color: var(--sign-fg);
+  font: inherit;
+  cursor: pointer;
+  /* Sized for a finger, not a mouse. */
+  min-height: 7vmin;
+  padding: 0 2.4vmin;
+  font-size: 2.2vmin;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.drill__back:active,
+.drill__close:active,
+.drill__action:active {
+  background: rgba(56, 189, 248, 0.25);
+}
+
+.drill__crumbs {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 0.8vmin;
+  font-size: 2vmin;
+  color: var(--sign-muted);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.drill__crumb:last-child {
+  color: var(--sign-fg);
+  font-weight: 600;
+}
+
+.drill__sep {
+  margin-right: 0.8vmin;
+  opacity: 0.5;
+}
+
+.drill__right {
+  display: flex;
+  align-items: center;
+  gap: 1.5vmin;
+  flex-shrink: 0;
+}
+
+.drill__timer {
+  font-size: 1.8vmin;
+  color: var(--sign-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 4ch;
+  text-align: right;
+}
+
+.drill__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  /* The sign body blocks scrolling; the overlay is the one place it belongs. */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  padding: 3vmin;
+}
+
+.drill__heading {
+  margin: 0 0 2vmin;
+  font-size: 4vmin;
+  display: flex;
+  align-items: baseline;
+  gap: 1.5vmin;
+}
+
+.drill__count {
+  font-size: 2.4vmin;
+  color: var(--sign-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.drill__message {
+  font-size: 2.6vmin;
+  color: var(--sign-muted);
+}
+
+.drill__action {
+  margin-top: 3vmin;
+}

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Fourth of July</title>
+  <desc>Fireworks and stars over navy, with the long weekend spelled out. The loud one of the patriotic three.</desc>
+
+  <!--
+    The counterpart to Memorial Day, and deliberately its opposite: fireworks,
+    stripes, and a headline sized to be read from the door. Two panels a month
+    apart should not look like the same day.
+
+    Bursts are one path each, twelve rays, so `draw` opens each as one event.
+    Stripes sweep from the left edge because that is where they start.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#0a1740"/>
+      <stop offset="1" stop-color="#132257"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="190"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.3">
+    <circle data-animate="breathe" cx="1640" cy="220" r="320" fill="#ef4444"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#ef4444 #f8fafc #60a5fa #fbbf24 #f472b6 #a78bfa"/>
+    <circle data-animate="breathe" data-animate-delay="3" cx="280" cy="880" r="280" fill="#60a5fa"/>
+  </g>
+
+  <g stroke-width="6" stroke-linecap="round" fill="none" opacity="0.9">
+    <g transform="translate(1620 250)" stroke="#ef4444" data-paint-field="accent" data-paint="stroke">
+      <path data-animate="draw" pathLength="1"
+            d="M0-60V-160M0 60V160M-60 0H-160M60 0H160M-42-42-113-113M42 42 113 113M-42 42-113 113M42-42 113-113M-31-75-47-115M31 75 47 115M-75 31-115 47M75-31 115-47"/>
+    </g>
+    <g transform="translate(320 210) scale(0.66)" stroke="#f8fafc">
+      <path data-animate="draw" data-animate-delay="2" pathLength="1"
+            d="M0-60V-160M0 60V160M-60 0H-160M60 0H160M-42-42-113-113M42 42 113 113M-42 42-113 113M42-42 113-113"/>
+    </g>
+    <g transform="translate(1730 760) scale(0.5)" stroke="#60a5fa">
+      <path data-animate="draw" data-animate-delay="4" pathLength="1"
+            d="M0-60V-160M0 60V160M-60 0H-160M60 0H160M-42-42-113-113M42 42 113 113M-42 42-113 113M42-42 113-113"/>
+    </g>
+  </g>
+
+  <!-- Stars scattered where the bursts are not. -->
+  <g fill="#f8fafc" opacity="0.7">
+    <g transform="translate(700 150) scale(1.1)">
+      <path data-animate="fade" data-animate-delay="3" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(1180 130) scale(0.85)">
+      <path data-animate="fade" data-animate-delay="4" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(1420 940) scale(0.9)">
+      <path data-animate="fade" data-animate-delay="5" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+    <g transform="translate(560 950) scale(0.8)">
+      <path data-animate="fade" data-animate-delay="6" d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <g opacity="0.9">
+      <rect data-animate="sweep" x="150" y="330" width="300" height="10" rx="5" fill="#ef4444"
+            data-paint-field="accent" data-paint="fill"/>
+      <rect data-animate="sweep" data-animate-delay="1" x="150" y="352" width="220" height="10" rx="5" fill="#f8fafc"/>
+      <rect data-animate="sweep" data-animate-delay="2" x="150" y="374" width="150" height="10" rx="5" fill="#ef4444"
+            data-paint-field="accent" data-paint="fill"/>
+    </g>
+
+    <text data-animate="fade" data-animate-delay="1" x="150" y="470" font-size="34" font-weight="700" letter-spacing="14" fill="#93c5fd"
+          data-field="eyebrow" data-label="Kicker" data-fit="1400">INDEPENDENCE DAY</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="2" x="146" y="630" font-size="140" font-weight="700" letter-spacing="-4" fill="#f8fafc"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1620">Happy Fourth</text>
+    <text data-animate="rise" data-animate-delay="3" x="146" y="770" font-size="140" font-weight="700" letter-spacing="-4" fill="#f8fafc"
+          data-field="headline" data-fit="1620">of July</text>
+
+    <text data-animate="rise" data-animate-delay="4" x="150" y="880" font-size="46" font-weight="500" fill="#dbeafe"
+          data-field="note" data-label="A line underneath" data-fit="1620">Closed Friday for the holiday. Back Monday, slightly sunburned.</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="150" y="960" font-size="34" fill="#93c5fd"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1620">July 4, 2026</text>
+  </g>
+</svg>

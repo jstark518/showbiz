@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Hanukkah</title>
+  <desc>A lit menorah in gold on deep blue, with the eight nights spelled out. Runs for over a week, so it is written to be left up.</desc>
+
+  <!--
+    Nine candles, not eight: the shamash in the middle is the one that lights
+    the others and stands taller. Getting that wrong is the kind of detail
+    someone walking past will notice immediately.
+
+    The flames `pulse` on staggered delays so they flicker independently. The
+    candles themselves are still — a menorah swaying would be alarming.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#0b1e46"/>
+      <stop offset="1" stop-color="#132f6b"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="190"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.3">
+    <circle data-animate="breathe" cx="1480" cy="420" r="320" fill="#fbbf24"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#fbbf24 #fde68a #f8fafc #93c5fd #e0e7ff #fb923c"/>
+  </g>
+
+  <!-- The menorah, right of the text. Drawn around its own origin. -->
+  <g transform="translate(1520 560) scale(0.92)" fill="#fbbf24" data-paint-field="accent" data-paint="fill">
+    <g data-animate="rise" data-animate-delay="1">
+      <rect x="-100" y="200" width="200" height="22" rx="11"/>
+      <rect x="-40" y="150" width="80" height="56" rx="10"/>
+      <rect x="-14" y="30" width="28" height="130" rx="8"/>
+      <rect x="-232" y="18" width="464" height="20" rx="10"/>
+      <g>
+        <rect x="-238" y="-70" width="20" height="94" rx="8"/>
+        <rect x="-180" y="-70" width="20" height="94" rx="8"/>
+        <rect x="-122" y="-70" width="20" height="94" rx="8"/>
+        <rect x="-64" y="-70" width="20" height="94" rx="8"/>
+        <rect x="-10" y="-130" width="20" height="154" rx="8"/>
+        <rect x="44" y="-70" width="20" height="94" rx="8"/>
+        <rect x="102" y="-70" width="20" height="94" rx="8"/>
+        <rect x="160" y="-70" width="20" height="94" rx="8"/>
+        <rect x="218" y="-70" width="20" height="94" rx="8"/>
+      </g>
+    </g>
+
+    <g fill="#fde68a">
+      <g transform="translate(-228 -78)"><path data-animate="pulse" data-animate-delay="1" d="M0 0c6-8 4-16 0-22-4 6-6 14 0 22z"/></g>
+      <g transform="translate(-170 -78)"><path data-animate="pulse" data-animate-delay="3" d="M0 0c6-8 4-16 0-22-4 6-6 14 0 22z"/></g>
+      <g transform="translate(-112 -78)"><path data-animate="pulse" data-animate-delay="5" d="M0 0c6-8 4-16 0-22-4 6-6 14 0 22z"/></g>
+      <g transform="translate(-54 -78)"><path data-animate="pulse" data-animate-delay="2" d="M0 0c6-8 4-16 0-22-4 6-6 14 0 22z"/></g>
+      <g transform="translate(0 -138) scale(1.3)"><path data-animate="pulse" d="M0 0c6-8 4-16 0-22-4 6-6 14 0 22z"/></g>
+      <g transform="translate(54 -78)"><path data-animate="pulse" data-animate-delay="4" d="M0 0c6-8 4-16 0-22-4 6-6 14 0 22z"/></g>
+      <g transform="translate(112 -78)"><path data-animate="pulse" data-animate-delay="6" d="M0 0c6-8 4-16 0-22-4 6-6 14 0 22z"/></g>
+      <g transform="translate(170 -78)"><path data-animate="pulse" data-animate-delay="2" d="M0 0c6-8 4-16 0-22-4 6-6 14 0 22z"/></g>
+      <g transform="translate(228 -78)"><path data-animate="pulse" data-animate-delay="5" d="M0 0c6-8 4-16 0-22-4 6-6 14 0 22z"/></g>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text data-animate="fade" x="150" y="320" font-size="34" font-weight="700" letter-spacing="14" fill="#fbbf24"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1180">HANUKKAH</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="146" y="480" font-size="120" font-weight="700" letter-spacing="-3" fill="#f8fafc"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1180">Happy Hanukkah</text>
+    <text data-animate="rise" data-animate-delay="2" x="146" y="600" font-size="120" font-weight="700" letter-spacing="-3" fill="#f8fafc"
+          data-field="headline" data-fit="1180">to all who celebrate</text>
+
+    <rect data-animate="sweep" data-animate-delay="3" x="150" y="662" width="200" height="8" rx="4" fill="#fbbf24"
+          data-paint-field="accent" data-paint="fill"/>
+
+    <text data-animate="rise" data-animate-delay="4" x="150" y="770" font-size="44" font-weight="500" fill="#dbeafe"
+          data-field="note" data-label="A line underneath" data-fit="1180">Eight nights, and donuts in the kitchen on the first.</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="150" y="880" font-size="36" fill="#93c5fd"
+          data-field="when" data-type="date" data-label="First night" data-part="date"
+          data-hint="The evening the first candle is lit." data-fit="1180">December 4, 2026</text>
+  </g>
+</svg>

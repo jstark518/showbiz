@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Lunar New Year</title>
+  <desc>Hanging lanterns and gold on red, with room for the animal of the year. For the celebration itself and the days around it.</desc>
+
+  <!--
+    Red and gold, which is the point — the palette is the greeting. So the
+    accent picker moves the lanterns and the rules rather than the ground, and
+    leads with gold rather than with the usual six.
+
+    Lanterns swing on `drift`, staggered so they do not swing as one object.
+    The cords are drawn from the top edge so a lantern reads as hanging from
+    something rather than floating.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#7f1d1d"/>
+      <stop offset="1" stop-color="#450a0a"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.32">
+    <circle data-animate="breathe" cx="960" cy="120" r="360" fill="#fbbf24"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#fbbf24 #fde68a #fb923c #f87171 #fca5a5 #ffffff"/>
+  </g>
+
+  <!--
+    One lantern, four times, at four sizes. The body is an ellipse with two caps
+    and a tassel; anything more detailed disappears at the size a wall panel
+    actually shows it.
+  -->
+  <g stroke="#fbbf24" stroke-width="3" data-paint-field="accent" data-paint="stroke" fill="none" opacity="0.9">
+    <path d="M210 0V150M1710 0V110M470 0V70M1470 0V60"/>
+  </g>
+
+  <g fill="#fbbf24" data-paint-field="accent" data-paint="fill" opacity="0.92">
+    <g transform="translate(210 240)">
+      <g data-animate="drift" data-animate-delay="1">
+        <rect x="-22" y="-96" width="44" height="14" rx="5"/>
+        <ellipse cx="0" cy="-24" rx="66" ry="58"/>
+        <rect x="-22" y="34" width="44" height="14" rx="5"/>
+        <path d="M0 48V96M-14 96 0 78 14 96" stroke="#fbbf24" stroke-width="5" fill="none"
+              data-paint-field="accent" data-paint="stroke"/>
+      </g>
+    </g>
+    <g transform="translate(1710 200) scale(0.84)">
+      <g data-animate="drift" data-animate-delay="3">
+        <rect x="-22" y="-96" width="44" height="14" rx="5"/>
+        <ellipse cx="0" cy="-24" rx="66" ry="58"/>
+        <rect x="-22" y="34" width="44" height="14" rx="5"/>
+        <path d="M0 48V96M-14 96 0 78 14 96" stroke="#fbbf24" stroke-width="5" fill="none"
+              data-paint-field="accent" data-paint="stroke"/>
+      </g>
+    </g>
+    <g transform="translate(470 150) scale(0.54)">
+      <g data-animate="drift" data-animate-delay="5">
+        <rect x="-22" y="-96" width="44" height="14" rx="5"/>
+        <ellipse cx="0" cy="-24" rx="66" ry="58"/>
+        <rect x="-22" y="34" width="44" height="14" rx="5"/>
+      </g>
+    </g>
+    <g transform="translate(1470 140) scale(0.48)">
+      <g data-animate="drift" data-animate-delay="2">
+        <rect x="-22" y="-96" width="44" height="14" rx="5"/>
+        <ellipse cx="0" cy="-24" rx="66" ry="58"/>
+        <rect x="-22" y="34" width="44" height="14" rx="5"/>
+      </g>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text data-animate="fade" x="960" y="440" font-size="36" font-weight="700" letter-spacing="16" fill="#fbbf24"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1400">LUNAR NEW YEAR</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="960" y="600" font-size="132" font-weight="700" letter-spacing="-4" fill="#fff7ed"
+          data-field="headline" data-label="The greeting"
+          data-hint="The year's animal reads well here. It wraps across two lines." data-fit="1620">Year of the Horse</text>
+    <text data-animate="rise" data-animate-delay="2" x="960" y="730" font-size="132" font-weight="700" letter-spacing="-4" fill="#fff7ed"
+          data-field="headline" data-fit="1620"></text>
+
+    <rect data-animate="sweep" data-animate-delay="3" x="810" y="790" width="300" height="8" rx="4" fill="#fbbf24"
+          data-paint-field="accent" data-paint="fill"/>
+
+    <text data-animate="rise" data-animate-delay="4" x="960" y="890" font-size="46" font-weight="500" fill="#fecaca"
+          data-field="note" data-label="A line underneath" data-fit="1620">Wishing everyone health, luck and a quiet inbox</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="960" y="970" font-size="34" fill="#fca5a5"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1620">February 17, 2026</text>
+  </g>
+</svg>

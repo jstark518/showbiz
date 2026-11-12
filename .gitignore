@@ -1,0 +1,30 @@
+node_modules/
+dist/
+out-tsc/
+tmp/
+*.tsbuildinfo
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+
+# A glob, not two exact names: `.env` does not match `.env.production` or
+# `.env.staging`, and the near-miss only shows up once one has been committed.
+.env*
+!.env.example
+
+media/
+data/
+
+# Rendered by samples/render.sh from the SVG sources beside it.
+samples/out/
+
+.DS_Store
+.vscode/*
+
+# Editor config is per-developer, and this repo is public — the module paths and
+# JDK names in here are noise to everyone who clones it. Was tracked until the
+# repo went public; `git rm -r --cached .idea` is what stops it coming back.
+.idea/

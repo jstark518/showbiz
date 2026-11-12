@@ -1,0 +1,159 @@
+# GitLab CI — build the sign image with Kaniko (no privileged) and deploy it.
+#
+#   build:image → Kaniko build of the repo root → $IMAGE:{latest,<sha>}
+#   deploy      → CNPG Postgres, then the app manifest, then roll the deployment
+#
+# This repo is public and the registry hostname is not, so every private
+# coordinate is a CI/CD variable rather than a literal here. `REGISTRY` is the
+# only one that must be set — in GitLab → Settings → CI/CD → Variables — and
+# everything else is derived from it. The default below is deliberately a
+# `.invalid` host: RFC 2606 guarantees it never resolves, so a fork that has
+# not set REGISTRY fails with a name it can read rather than reaching anything.
+#
+# The deploy job runs on the in-cluster Kubernetes runner, whose ServiceAccount
+# has cluster-admin, so there are no credentials here. Set KUBE_CONFIG_DATA
+# (base64 kubeconfig) to deploy somewhere else.
+#
+# Uploads live in MinIO. The deploy generates this app's key, then runs
+# k8s/minio-bootstrap.yaml to make the bucket, user and policy — the same shape
+# the cluster's own MinIO deployment uses.
+#
+# One thing CI deliberately does NOT own: the optional `sign-jira` Secret. See
+# README.md — Jira credentials are created out of band, or typed into the panel.
+#
+# This file also exists to suppress Auto DevOps, which is on instance-wide and
+# cannot build this repo (no GitLab container registry, so it dies on an empty
+# CI_REGISTRY_IMAGE).
+
+stages: [build, deploy]
+
+variables:
+  # Set this one in CI/CD → Variables; see the note at the top of this file.
+  REGISTRY: registry.invalid
+  IMAGE: $REGISTRY/sign
+  # The Dockerfile defaults these to Docker Hub so a public clone of this repo
+  # builds unattended; the private bases are supplied here instead. They carry
+  # the TLS trust store, tzdata and the uid 10001 `app` user that
+  # k8s/sign.yaml's runAsUser names.
+  NODE_IMAGE: $REGISTRY/docker-base-node:24
+  NODE_BUILD_IMAGE: $REGISTRY/docker-base-node-build:24
+  # Job images. Mirrored on-prem rather than pulled from gcr.io/Docker Hub.
+  KANIKO_IMAGE: $REGISTRY/kaniko-executor:debug
+  KUBECTL_IMAGE: $REGISTRY/docker-base-kubectl:1.35
+  # The ingress hostname the app is served on, substituted into k8s/sign.yaml.
+  SIGN_HOST: sign.example.invalid
+
+build:image:
+  stage: build
+  # Mirrored Kaniko: re-hosted from gcr.io, and /kaniko/executor-cached injects
+  # the on-prem cache build-args (NPM_CONFIG_REGISTRY) that the Dockerfile's
+  # npm stages declare.
+  image:
+    name: $KANIKO_IMAGE
+    entrypoint: [""]
+  variables:
+    KANIKO_EXTRA: ""
+  rules:
+    # Validate the build on an MR without publishing. `npm run build` runs the
+    # Vite builds and the esbuild bundle, so a broken import fails here rather
+    # than on the wall.
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      variables:
+        KANIKO_EXTRA: "--no-push"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+  script:
+    - mkdir -p /kaniko/.docker && echo '{}' > /kaniko/.docker/config.json
+    - >
+      /kaniko/executor-cached
+      --context "$CI_PROJECT_DIR"
+      --dockerfile "$CI_PROJECT_DIR/Dockerfile"
+      --build-arg "NODE_IMAGE=$NODE_IMAGE"
+      --build-arg "NODE_BUILD_IMAGE=$NODE_BUILD_IMAGE"
+      --destination "$IMAGE:latest"
+      --destination "$IMAGE:$CI_COMMIT_SHORT_SHA"
+      $KANIKO_EXTRA
+
+deploy:
+  stage: deploy
+  needs: ["build:image"]
+  image:
+    name: $KUBECTL_IMAGE
+    entrypoint: [""]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    # An unset REGISTRY already fails loudly — both jobs cannot even pull their
+    # own `image:` from `registry.invalid`. SIGN_HOST has no such backstop: left
+    # at its placeholder the apply *succeeds* and quietly publishes an Ingress
+    # on a hostname that resolves nowhere and will never get a cert. Refuse
+    # instead, because a deploy that reports success is the expensive failure.
+    - |
+      case "${SIGN_HOST:-}" in
+        ''|*.invalid)
+          echo "SIGN_HOST is '${SIGN_HOST:-<unset>}'." >&2
+          echo "Set it in GitLab → Settings → CI/CD → Variables to the ingress" >&2
+          echo "hostname this app is served on. See .gitlab-ci.yml." >&2
+          exit 1
+          ;;
+      esac
+    - |
+      if [ -n "$KUBE_CONFIG_DATA" ]; then
+        echo "$KUBE_CONFIG_DATA" | base64 -d > /tmp/kubeconfig
+        export KUBECONFIG=/tmp/kubeconfig
+      fi
+  script:
+    # The namespace has to exist before the Cluster that lives in it, and the
+    # Cluster has to be Ready before the app, which reads the Secret CNPG
+    # generates. Without the wait the first deploy of a fresh install spends a
+    # few minutes in CreateContainerConfigError instead of failing honestly.
+    - kubectl create namespace sign --dry-run=client -o yaml | kubectl apply -f -
+    - kubectl apply -f k8s/postgres-cnpg.yaml
+    - kubectl -n sign wait --for=condition=Ready cluster/sign-pg --timeout=600s
+    # --- uploads: MinIO bucket, user, policy and the Secret the app reads ----
+    #
+    # All of it before `kubectl apply`. The app will not start without these
+    # credentials and `strategy: Recreate` puts the old pod down before the new
+    # one comes up, so a problem found at rollout time is an outage rather than
+    # a failed job.
+    #
+    # The key is generated in the **minio** namespace, because that is where
+    # the bootstrap Job has to run — `minio-root` lives there and Kubernetes
+    # has no cross-namespace Secret reference. Generated once and only if
+    # absent, so a rerun never rotates a working key out from under the app.
+    - |
+      kubectl -n minio get secret sign-s3 >/dev/null 2>&1 || \
+        kubectl -n minio create secret generic sign-s3 \
+          --from-literal=ACCESS_KEY_ID="sign" \
+          --from-literal=ACCESS_SECRET_KEY="$(cat /proc/sys/kernel/random/uuid)$(cat /proc/sys/kernel/random/uuid)"
+    # The same key, copied into the app's namespace for the Deployment to read.
+    # Rebuilt from the values rather than piped through `-o yaml`, which carries
+    # resourceVersion and uid that `apply` into another namespace chokes on.
+    - |
+      kubectl -n sign create secret generic sign-s3 \
+        --from-literal=ACCESS_KEY_ID="$(kubectl -n minio get secret sign-s3 -o jsonpath='{.data.ACCESS_KEY_ID}' | base64 -d)" \
+        --from-literal=ACCESS_SECRET_KEY="$(kubectl -n minio get secret sign-s3 -o jsonpath='{.data.ACCESS_SECRET_KEY}' | base64 -d)" \
+        --dry-run=client -o yaml | kubectl apply -f -
+    # A Job's pod template is immutable, so `apply` over a previous run fails.
+    # Deleting first is what makes re-running the bootstrap idempotent.
+    - kubectl -n minio delete job sign-bootstrap --ignore-not-found
+    - kubectl apply -f k8s/minio-bootstrap.yaml
+    - kubectl -n minio wait --for=condition=complete job/sign-bootstrap --timeout=180s
+    # Surface the bootstrap's own output — if the bucket or policy failed, that
+    # log is the only place it says so.
+    - kubectl -n minio logs job/sign-bootstrap
+    # The manifest carries __SIGN_IMAGE__ / __SIGN_HOST__ placeholders rather
+    # than literals, so that a public repo names neither the registry nor the
+    # hostname. sed rather than envsubst: it is in every base image, and there
+    # is no risk of it eating an unrelated `$VAR` the manifest wants to keep.
+    # Braces on ${IMAGE} are not optional cosmetics: a bare `$IMAGE:latest` is
+    # the `:l` lowercase modifier in zsh, which silently yields `…/signatest`.
+    # The CI shell is sh, but the same line gets pasted into a terminal.
+    - |
+      sed -e "s|__SIGN_IMAGE__|${IMAGE}:latest|g" \
+          -e "s|__SIGN_HOST__|${SIGN_HOST}|g" \
+          k8s/sign.yaml | kubectl apply -f -
+    # The substituted image is :latest, so the apply above is usually a no-op
+    # spec-wise; the restart is what actually pulls the new image.
+    - kubectl -n sign rollout restart deploy/sign
+    - kubectl -n sign rollout status deploy/sign --timeout=300s

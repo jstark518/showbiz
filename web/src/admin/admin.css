@@ -1,0 +1,1595 @@
+/* Control panel styling. Ordinary desktop UI: dense, legible, no animation. */
+
+:root {
+  /*
+   * Tells the browser this UI is dark, which is what makes the *native* parts
+   * follow: the calendar and clock icons inside date and time inputs, their
+   * dropdown pickers, scrollbars and spinners. Without it those are drawn for
+   * a light background — a near-black glyph on a near-black field, which is
+   * how the date input's icon became invisible.
+   *
+   * Cheaper and more complete than filtering
+   * `::-webkit-calendar-picker-indicator`, which is one vendor-prefixed glyph
+   * and leaves the picker panel itself light.
+   */
+  color-scheme: dark;
+
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-2: #273449;
+  --line: #334155;
+  --fg: #f1f5f9;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-fg: #082f49;
+  --danger: #f87171;
+  --success: #4ade80;
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- top bar --------------------------------------------------------------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 20px;
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.topbar__mark {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--accent);
+}
+
+.topbar__nav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.topbar__tab {
+  padding: 7px 14px;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.topbar__tab:hover {
+  color: var(--fg);
+  background: var(--surface-2);
+}
+
+.topbar__tab.is-active {
+  background: var(--surface-2);
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.topbar__preview {
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.topbar__preview:hover {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+/* --- layout ---------------------------------------------------------------- */
+
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .page--split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/*
+ * The heading belongs to the page, not to the list under it. Left inside the
+ * first column it pushes that column down while the detail column starts at
+ * the top, and the two empty states sit at different heights — which reads as
+ * a layout bug rather than a heading.
+ */
+.page--split > .page__header {
+  grid-column: 1 / -1;
+}
+
+.page__header h1 {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+
+.column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.column--detail {
+  position: sticky;
+  top: 76px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+/* --- generic bits ---------------------------------------------------------- */
+
+.muted {
+  color: var(--muted);
+  margin: 0;
+}
+
+.btn {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn--small {
+  padding: 5px 10px;
+  font-size: 13px;
+}
+
+.btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+
+.btn--danger {
+  color: var(--danger);
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+.linklike {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.pill {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pill--live {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--success);
+}
+
+.pill--dirty {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+}
+
+.pill--muted {
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+.banner {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid;
+  font-size: 13px;
+}
+
+.banner code {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.banner--error {
+  background: rgba(248, 113, 113, 0.1);
+  border-color: rgba(248, 113, 113, 0.35);
+  color: #fecaca;
+}
+
+.banner--success {
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.35);
+  color: #bbf7d0;
+}
+
+.banner--info {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: #bae6fd;
+}
+
+.empty {
+  padding: 32px 20px;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  color: var(--muted);
+}
+
+.empty h2 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  color: var(--fg);
+}
+
+.empty p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* --- form controls --------------------------------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field__label {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.field__hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+input[type='text'],
+input[type='url'],
+input[type='email'],
+input[type='password'],
+input[type='number'],
+input[type='date'],
+input[type='time'],
+input[type='datetime-local'],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 0.55;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.toggle {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.toggle__label {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.toggle .field__hint {
+  grid-column: 2;
+}
+
+/* --- slides page ----------------------------------------------------------- */
+
+.playlistbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.playlistbar select {
+  flex: 1;
+  min-width: 180px;
+}
+
+.addbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.slidelist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.slidelist__item {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.slidelist__item.is-selected {
+  border-color: var(--accent);
+}
+
+.slidelist__item.is-disabled {
+  opacity: 0.5;
+}
+
+.slidelist__main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.slidelist__index {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
+  background: var(--surface-2);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.slidelist__text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.slidelist__title {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slidelist__meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.slidelist__actions {
+  display: flex;
+  align-items: center;
+  padding-right: 6px;
+}
+
+/*
+ * The square icon button used at the end of a list row.
+ *
+ * `.iconbtn` is here rather than in a page's own section because plugin tabs
+ * need it too — a plugin restyling its rows from scratch would drift from the
+ * rest of the panel the first time either changed.
+ */
+.slidelist__actions button,
+.iconbtn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.slidelist__actions button:hover:not(:disabled),
+.iconbtn:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--fg);
+}
+
+.slidelist__actions button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.slidelist__actions .danger:hover,
+.iconbtn.danger:hover {
+  color: var(--danger);
+}
+
+/* An offer to turn this slide into another kind, from the plugin that provides
+   the other kind. Sits under the status banner, above the form it will replace. */
+.convert {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
+
+/* --- blackout schedule -----------------------------------------------------
+ *
+ * A divider inside a card, for the one settings card long enough to need two
+ * parts. Splitting it into two cards would mean two drafts and two Save
+ * buttons over one stored object, and whichever was saved second would quietly
+ * throw the other away.
+ */
+
+.card__section {
+  margin: 8px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sched__state {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  border-left: 3px solid var(--muted);
+  background: var(--surface-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sched__state.is-awake {
+  border-left-color: #22c55e;
+}
+
+.sched__state.is-asleep {
+  border-left-color: #64748b;
+  color: var(--muted);
+}
+
+.sched {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sched__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+/* A day that is off keeps its full-height row, so the seven of them stay a
+   readable column rather than jumping about as they are toggled. */
+.sched__row.is-off {
+  opacity: 0.62;
+}
+
+.sched__day {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 130px;
+}
+
+.sched__times {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.sched__times input {
+  width: auto;
+  padding: 4px 8px;
+}
+
+.sched__to {
+  color: var(--muted);
+}
+
+.sched__note {
+  margin: 0;
+  font-size: 12px;
+}
+
+/* --- editor panel ---------------------------------------------------------- */
+
+.editor,
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.editor__header,
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.editor__header h2,
+.card__header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.editor__actions,
+.card__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.editor__schedule summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+.editor__schedule[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- WYSIWYG media stage ----------------------------------------------------
+ *
+ * A live preview of an image or video slide as the sign draws it, edited in
+ * place. `.stage__frame` is laid out at the sign's nominal pixel size and then
+ * scaled down by the component, which is what lets every length below be the
+ * same multiple of `--vmin` that sign.css uses.
+ *
+ * That correspondence is the whole point, so keep it: these rules mirror
+ * `.slide--image`, `.slide__media` and `.slide__caption` in
+ * web/src/sign/sign.css, and changing one without the other makes the panel
+ * lie about what will go on the wall. The sign is the source of truth.
+ */
+
+.stagewrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stagebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stagebar__end {
+  margin-left: auto;
+}
+
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.seg button {
+  padding: 6px 12px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.seg button:first-child {
+  border-left: 0;
+}
+
+.seg button:hover:not(.is-on) {
+  color: var(--accent);
+}
+
+.seg button.is-on {
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  /* An outline rather than a border: `aspect-ratio` sizes the border box, so a
+     1px border leaves the box a fraction taller than the frame scaled to fit
+     its content width, and the preview no longer ends exactly where the sign
+     does. A shadow takes up no layout. */
+  box-shadow: 0 0 0 1px var(--line);
+  border-radius: var(--radius);
+  /* Matches .slide--image / .slide--video, so `contain` letterboxes against
+     the same black the sign uses rather than against the panel's navy. */
+  background: #000;
+}
+
+.stage--portrait {
+  aspect-ratio: 9 / 16;
+  /* Unconstrained, a 9:16 preview is taller than the panel. */
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.stage.is-dragging {
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.stage__frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  /* .sign-body */
+  color: #f8fafc;
+  line-height: 1.4;
+}
+
+.stage__media {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.stage__media--cover {
+  object-fit: cover;
+}
+
+.stage__media--contain {
+  object-fit: contain;
+}
+
+/* .slide--placeholder, loosely: same centering, same muted grey. */
+.stage__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(1.5 * var(--vmin));
+  padding: calc(6 * var(--vmin));
+  text-align: center;
+  color: #94a3b8;
+  font-size: calc(2.8 * var(--vmin));
+}
+
+.stage__empty strong {
+  color: #f8fafc;
+  font-size: calc(4 * var(--vmin));
+}
+
+.stage__drop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 47, 73, 0.75);
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius);
+  color: var(--fg);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/* .slide__caption */
+.stage__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: calc(4 * var(--vmin)) calc(5 * var(--vmin)) calc(5 * var(--vmin));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+}
+
+/*
+ * An empty caption draws nothing at all on the sign. Here it stays as a faint
+ * band, because a target you cannot see is a target nobody clicks.
+ */
+.stage__caption.is-empty {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+}
+
+.stage__caption-input {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  resize: none;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: calc(3.4 * var(--vmin));
+  font-weight: 600;
+  line-height: inherit;
+  color: #fff;
+}
+
+.stage__caption-input::placeholder {
+  color: rgba(248, 250, 252, 0.45);
+  font-weight: 500;
+}
+
+/* Inset so gaining focus does not shift the text it is drawn around. */
+.stage__caption-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 calc(0.3 * var(--vmin)) var(--accent);
+  border-radius: calc(0.6 * var(--vmin));
+}
+
+.stage__note,
+.stage__error {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stage__error {
+  color: var(--danger);
+}
+
+/*
+ * Wraps rather than running off the side.
+ *
+ * It used to be one row with `overflow-x: auto`, which does scroll — but on a
+ * trackpad with overlay scrollbars there is nothing to say so, and a library
+ * of a dozen images looked like a library of six. Wrapping shows the count
+ * honestly, and when there are enough rows to need it the overflow is vertical,
+ * where a plain mouse wheel already works.
+ */
+.stagerail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.stagerail__item,
+.stagerail__add {
+  flex: 0 0 auto;
+  width: 104px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.stagerail__item:hover,
+.stagerail__add:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+.stagerail__item.is-current {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.stagerail__thumb {
+  display: block;
+  width: 100%;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #000;
+}
+
+.stagerail__name {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stagerail__add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 80px;
+  border-style: dashed;
+  font-size: 18px;
+}
+
+.stagerail__add:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* --- live slide preview -----------------------------------------------------
+ *
+ * An iframe running the sign's own bundle, laid out at nominal sign size and
+ * scaled down by SlidePreview. See that file for why it has to be a frame and
+ * not a div.
+ */
+
+.framestage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius);
+  /* A shadow rather than a border, so `aspect-ratio` sizes the same box the
+     frame is scaled into — the same reasoning as `.stage`. */
+  box-shadow: 0 0 0 1px var(--line);
+  background: #000;
+}
+
+.framestage--waiting {
+  aspect-ratio: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
+  padding: 16px;
+  text-align: center;
+  background: var(--bg);
+  border: 1px dashed var(--line);
+  box-shadow: none;
+}
+
+.framestage__frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  transform-origin: top left;
+}
+
+/* --- sign preview dialog --------------------------------------------------- */
+
+.signpreview {
+  width: min(1180px, 94vw);
+  max-height: 94vh;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--fg);
+  overflow: auto;
+}
+
+.signpreview::backdrop {
+  background: rgba(2, 6, 23, 0.72);
+}
+
+.signpreview__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.signpreview__head h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.signpreview__actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.signpreview__foot {
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.signpreview__foot code {
+  background: rgba(0, 0, 0, 0.25);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* --- image templates -------------------------------------------------------
+ *
+ * The dialog is a real <dialog> opened with showModal(), which brings Esc to
+ * close, the backdrop and a focus trap without any of it being written here.
+ */
+
+.tpl {
+  width: min(1180px, 94vw);
+  max-height: 92vh;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--fg);
+  overflow: auto;
+}
+
+.tpl::backdrop {
+  background: rgba(2, 6, 23, 0.72);
+}
+
+.tpl__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tpl__head h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.tpl__headactions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Sections only appear once there is more than one, so the heading is styled
+   as a divider rather than as a title — it is separating piles, not naming a
+   page. */
+.tplsection + .tplsection {
+  margin-top: 22px;
+}
+
+.tplsection__head {
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.tplgrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.tplcard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tplcard:hover {
+  border-color: var(--accent);
+}
+
+.tplcard__art {
+  display: block;
+  width: 100%;
+  /* Portrait and landscape templates sit in one grid, so the art is boxed to a
+     common shape and shown whole rather than cropped to fill it. */
+  height: 150px;
+  object-fit: contain;
+  border-radius: 5px;
+  background: #000;
+  margin-bottom: 4px;
+}
+
+.tplcard__name {
+  font-weight: 600;
+}
+
+.tplcard__desc {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.tplcard__meta {
+  margin-top: auto;
+  padding-top: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.tpledit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .tpledit {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/*
+ * The artwork answers to the SVG and nothing else.
+ *
+ * `text-transform`, `letter-spacing`, `word-spacing` and `font-variant` all
+ * inherit, and this preview sits deep inside panel chrome. Anything picked up
+ * from an ancestor is a lie the moment the artwork leaves: the export is
+ * serialized from the markup without a byte of page CSS, and the sign has its
+ * own stylesheet.
+ *
+ * Worse than looking wrong, it *measures* wrong — fitting calls
+ * `getComputedTextLength()` on these very elements. This shipped: a stray
+ * selector left `.editor` inheriting a heading's `text-transform: uppercase`,
+ * the preview drew in capitals, text came out ~24% wider, and two fields that
+ * plainly fit were flagged as too long. The reset is the guard, so the next
+ * ancestor style cannot do it again.
+ */
+.tpledit__art {
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 0 1px var(--line);
+  text-transform: none;
+  letter-spacing: normal;
+  word-spacing: normal;
+  font-variant: normal;
+  font-style: normal;
+}
+
+/* The SVG carries a viewBox, so it scales itself and every measurement inside
+   stays in the template's own units however big the box is. */
+.tpledit__art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tpledit__art [data-field] {
+  cursor: text;
+}
+
+/*
+ * Highlighting the text being edited. `paint-order` puts the stroke behind the
+ * glyphs so it reads as a halo rather than an outline.
+ *
+ * This lives in the panel's stylesheet, not in the SVG, which is what keeps it
+ * out of the exported file: the image is serialized from the markup alone.
+ */
+.tpledit__art [data-field].is-active {
+  paint-order: stroke;
+  stroke: var(--accent);
+  stroke-width: 10px;
+  stroke-opacity: 0.55;
+  stroke-linejoin: round;
+}
+
+.tpledit__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Only rendered where the artwork really animates, i.e. the template slide's
+   editor. The entry motions are one-shot, so there has to be a way to see them
+   a second time without reopening the slide. */
+.tpledit__replay {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.tplfield {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tplfield__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.tplfield.is-active .tplfield__label {
+  color: var(--accent);
+}
+
+.tplfield__input {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  resize: vertical;
+}
+
+.tplfield__input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.tplfield__hint {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/*
+ * A color field: the artwork's own palette first, then the full picker.
+ *
+ * The swatches sit inside the field's label like any other control, so
+ * clicking the card in the preview still focuses this row.
+ */
+.tplcolor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tplcolor__swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.tplcolor__swatch.is-selected {
+  border-color: var(--fg);
+}
+
+.tplcolor__swatch:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* The native swatch button varies by platform; strip its chrome so it reads
+   as one more circle in the row rather than a form control that wandered in. */
+.tplcolor__picker {
+  width: 30px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: none;
+  cursor: pointer;
+}
+
+.tplcolor__value {
+  font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.tplfield__warn {
+  font-size: 11px;
+  color: #facc15;
+}
+
+.dropzone__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* --- media page ------------------------------------------------------------ */
+
+.dropzone {
+  border: 2px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  text-align: center;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropzone.is-dragging {
+  border-color: var(--accent);
+  background: rgba(56, 189, 248, 0.06);
+}
+
+.dropzone p {
+  margin: 0;
+}
+
+.mediagrid {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.mediacard {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.mediacard__preview {
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.mediacard__preview img,
+.mediacard__preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.mediacard__body {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mediacard__name {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mediacard__edit {
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+.mediacard__meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.mediacard__delete {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.mediacard__delete:hover {
+  background: var(--danger);
+  color: #450a0a;
+}
+
+/* --- signs tab ------------------------------------------------------------ */
+
+.signs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 900px;
+}
+
+.card__hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.signs__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.signs__head h2 {
+  margin: 0 0 4px;
+}
+
+.signlist {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.signcard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  background: var(--surface-2, rgba(148, 163, 184, 0.06));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.signcard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Editable in place, so it does not look like an input until you go near it —
+   the name is what you scan the list for, and a row of identical form boxes
+   buries it. Qualified with `input` deliberately: the generic
+   `input[type='text']` rule above is an element-plus-attribute selector, so a
+   bare class here loses to it and the field comes back as a box. */
+input.signcard__name {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+  font-size: 15px;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+input.signcard__name:hover,
+input.signcard__name:focus {
+  background: var(--bg);
+  border-color: var(--line);
+}
+
+.signcard__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.signcard__playlist {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Monospace because this gets read aloud and typed into a player by hand. */
+.signcard__url {
+  flex: 1;
+  min-width: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+
+.presence {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.presence__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--muted);
+  /* Flat when dark, so a wall of disconnected screens does not read as a wall
+     of alarms. Only the connected state earns any color. */
+  opacity: 0.5;
+}
+
+.presence--on {
+  color: var(--success);
+}
+
+.presence--on .presence__dot {
+  background: currentColor;
+  opacity: 1;
+}
+
+.signadd {
+  width: min(420px, 92vw);
+  padding: 0;
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.signadd::backdrop {
+  background: rgba(2, 6, 23, 0.6);
+}
+
+.signadd__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+}
+
+.signadd__body h2 {
+  margin: 0;
+}
+
+.signadd__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

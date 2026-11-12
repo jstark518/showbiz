@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Thanksgiving</title>
+  <desc>Maple leaves scattered over a ruled harvest card, on warm cream deepening to amber. Light, and the warmest of the set.</desc>
+
+  <!--
+    Rebuilt, because the first version was the same centered stack as Easter and
+    Valentine's with a different palette — three templates that were one
+    template wearing three colors. Two things make this one its own:
+
+    The ruled frame. It gives the wording a printed card to sit on rather than
+    floating in the middle of a field, and the leaves crossing it are what stop
+    the rule reading as a border. It draws itself on arrival, so the card is
+    ruled in front of you.
+
+    The leaf. A pointed oval is a leaf the way a circle is a face — the shape
+    was doing none of the work, so this is a maple, with the lobes that make it
+    read as autumn at a glance and a stem carried as a second subpath so the
+    whole thing stays one fill.
+
+    Placement lives on the wrapper <g> and motion on the child throughout: the
+    sign animates `transform` for `drift`, which discards a `transform`
+    attribute on the same element outright.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#fffaf0"/>
+      <stop offset="0.55" stop-color="#fdeed6"/>
+      <stop offset="1" stop-color="#f8d9ab"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.28">
+    <circle data-animate="breathe" cx="1720" cy="140" r="300" fill="#ea580c"/>
+    <circle data-animate="breathe" data-animate-delay="3" cx="180" cy="960" r="300" fill="#b45309"/>
+  </g>
+
+  <!-- The card. One stroked rectangle, drawn on arrival. -->
+  <path data-animate="draw" pathLength="1"
+        d="M104 78H1816a26 26 0 0 1 26 26v872a26 26 0 0 1-26 26H104a26 26 0 0 1-26-26V104a26 26 0 0 1 26-26z"
+        fill="none" stroke="#b45309" stroke-opacity="0.42" stroke-width="3"/>
+
+  <!--
+    Leaves, crossing the rule at the corners. One maple at a nominal 52 x 64,
+    stem included as a subpath so a single fill covers both.
+  -->
+  <g opacity="0.92">
+    <g transform="translate(150 170) scale(2.3)">
+      <g data-animate="drift" data-animate-delay="1">
+        <path fill="#ea580c" data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+              data-paint-swatch="#ea580c #d97706 #b45309 #ca8a04 #dc2626 #a16207"
+              d="M0-30 4-19 13-23 10-12 21-10 15-2 26 4 13 8 17 18 6 15 7 27 0 21-7 27-6 15-17 18-13 8-26 4-15-2-21-10-10-12-13-23-4-19ZM-1.6 20h3.2v14h-3.2z"/>
+      </g>
+    </g>
+    <g transform="translate(1782 214) scale(2)">
+      <g data-animate="drift" data-animate-delay="3">
+        <path fill="#d97706"
+              d="M0-30 4-19 13-23 10-12 21-10 15-2 26 4 13 8 17 18 6 15 7 27 0 21-7 27-6 15-17 18-13 8-26 4-15-2-21-10-10-12-13-23-4-19ZM-1.6 20h3.2v14h-3.2z"/>
+      </g>
+    </g>
+    <g transform="translate(1796 902) scale(1.9)">
+      <g data-animate="drift" data-animate-delay="5">
+        <path fill="#b45309"
+              d="M0-30 4-19 13-23 10-12 21-10 15-2 26 4 13 8 17 18 6 15 7 27 0 21-7 27-6 15-17 18-13 8-26 4-15-2-21-10-10-12-13-23-4-19ZM-1.6 20h3.2v14h-3.2z"/>
+      </g>
+    </g>
+    <g transform="translate(128 890) scale(2.1)">
+      <g data-animate="drift" data-animate-delay="6">
+        <path fill="#ca8a04" data-paint-field="accent" data-paint="fill"
+              d="M0-30 4-19 13-23 10-12 21-10 15-2 26 4 13 8 17 18 6 15 7 27 0 21-7 27-6 15-17 18-13 8-26 4-15-2-21-10-10-12-13-23-4-19ZM-1.6 20h3.2v14h-3.2z"/>
+      </g>
+    </g>
+
+    <g transform="translate(480 130) scale(1.1)" opacity="0.7">
+      <path data-animate="drift" data-animate-delay="2" fill="#dc2626"
+            d="M0-30 4-19 13-23 10-12 21-10 15-2 26 4 13 8 17 18 6 15 7 27 0 21-7 27-6 15-17 18-13 8-26 4-15-2-21-10-10-12-13-23-4-19ZM-1.6 20h3.2v14h-3.2z"/>
+    </g>
+    <g transform="translate(1440 118) scale(1)" opacity="0.7">
+      <path data-animate="drift" data-animate-delay="4" fill="#b45309"
+            d="M0-30 4-19 13-23 10-12 21-10 15-2 26 4 13 8 17 18 6 15 7 27 0 21-7 27-6 15-17 18-13 8-26 4-15-2-21-10-10-12-13-23-4-19ZM-1.6 20h3.2v14h-3.2z"/>
+    </g>
+    <g transform="translate(1490 960) scale(1.1)" opacity="0.7">
+      <path data-animate="drift" data-animate-delay="5" fill="#ea580c"
+            d="M0-30 4-19 13-23 10-12 21-10 15-2 26 4 13 8 17 18 6 15 7 27 0 21-7 27-6 15-17 18-13 8-26 4-15-2-21-10-10-12-13-23-4-19ZM-1.6 20h3.2v14h-3.2z"/>
+    </g>
+    <g transform="translate(430 966) scale(1)" opacity="0.7">
+      <path data-animate="drift" data-animate-delay="3" fill="#d97706"
+            d="M0-30 4-19 13-23 10-12 21-10 15-2 26 4 13 8 17 18 6 15 7 27 0 21-7 27-6 15-17 18-13 8-26 4-15-2-21-10-10-12-13-23-4-19ZM-1.6 20h3.2v14h-3.2z"/>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text data-animate="fade" x="960" y="330" font-size="34" font-weight="700" letter-spacing="16" fill="#b45309"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1250">HAPPY THANKSGIVING</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="960" y="510" font-size="126" font-weight="700" letter-spacing="-4" fill="#431407"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1450">Grateful for</text>
+    <text data-animate="rise" data-animate-delay="2" x="960" y="636" font-size="126" font-weight="700" letter-spacing="-4" fill="#431407"
+          data-field="headline" data-fit="1450">a good year together</text>
+
+    <!-- Three dots rather than a rule: the card is already ruled, and a second
+         straight line inside it reads as a mistake. -->
+    <g data-animate="fade" data-animate-delay="3" fill="#ea580c" data-paint-field="accent" data-paint="fill">
+      <circle cx="924" cy="700" r="6"/>
+      <circle cx="960" cy="700" r="6"/>
+      <circle cx="996" cy="700" r="6"/>
+    </g>
+
+    <text data-animate="rise" data-animate-delay="4" x="960" y="800" font-size="46" font-weight="500" fill="#7c2d12"
+          data-field="note" data-label="A line underneath" data-fit="1450">Closed Thursday and Friday. Back Monday, in slightly larger pants.</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="960" y="890" font-size="34" fill="#92400e"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1450">November 26, 2026</text>
+  </g>
+</svg>

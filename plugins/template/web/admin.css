@@ -1,0 +1,14 @@
+/* --- template artwork slide --------------------------------------------------
+ *
+ * The editor reuses the media dialog's form wholesale, so this is only the
+ * difference: inside a slide editor it is a column in a narrow panel rather
+ * than the two-up layout of a full-width modal.
+ */
+
+.tpledit--slide {
+  display: block;
+}
+
+.tpledit--slide .tpledit__form {
+  padding-top: 12px;
+}

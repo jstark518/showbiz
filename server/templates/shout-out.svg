@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Shout out</title>
+  <desc>Someone's name at the size of the wall, and what they did. For a launch shipped, a save made, a first week survived.</desc>
+
+  <!--
+    The name is the slide. Everything else is set small enough that it cannot
+    compete with it, because a shout out that has to be read carefully is not
+    one.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#1a1230"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="190"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.4">
+    <circle cx="1560" cy="240" r="340" fill="#a78bfa"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#a78bfa #4ade80 #38bdf8 #facc15 #f472b6 #f87171"/>
+    <circle cx="320" cy="960" r="280" fill="#f472b6"/>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text data-animate="fade" x="960" y="252" font-size="36" font-weight="700" letter-spacing="14" fill="#a78bfa"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1500">NICE WORK</text>
+
+    <text data-animate="pop" data-animate-delay="1" x="960" y="470" fill="#f8fafc" font-size="200" font-weight="700" letter-spacing="-6"
+          data-field="name" data-label="Who"
+          data-hint="A name, a pair of names, or a team." data-fit="1620">Dana Ellis</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="2" x="960" y="620" fill="#e2e8f0" font-size="62" font-weight="500"
+          data-field="reason" data-label="What they did"
+          data-hint="One sentence. It wraps across two lines." data-fit="1500">Rebuilt the checkout flow over a weekend</text>
+    <text data-animate="rise" data-animate-delay="3" x="960" y="702" fill="#e2e8f0" font-size="62" font-weight="500"
+          data-field="reason" data-fit="1500">and nobody noticed a thing</text>
+
+    <rect data-animate="sweep" data-animate-delay="3" x="810" y="790" width="300" height="6" rx="3" fill="#a78bfa"
+          data-paint-field="accent" data-paint="fill"/>
+
+    <text data-animate="fade" data-animate-delay="4" x="960" y="900" fill="#94a3b8" font-size="38"
+          data-field="from" data-label="From" data-fit="1500">From everyone on the platform team</text>
+  </g>
+</svg>

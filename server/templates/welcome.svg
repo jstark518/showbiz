@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Welcome</title>
+  <desc>A greeting for a lobby or a reception desk. One big line and a couple of quiet ones.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="0.6" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="160"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.42">
+    <circle cx="1560" cy="240" r="300" fill="#38bdf8"/>
+    <circle cx="360" cy="960" r="280" fill="#6366f1"/>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text x="960" y="330" fill="#38bdf8" font-size="32" font-weight="700" letter-spacing="14"
+          data-field="eyebrow" data-label="Kicker" data-fit="1500">GOOD MORNING</text>
+
+    <text x="960" y="530" fill="#f8fafc" font-size="150" font-weight="700" letter-spacing="-4"
+          data-field="headline" data-label="Greeting" data-hint="Two lines of room. A guest's name goes well on the second." data-fit="1560">Welcome</text>
+    <text x="960" y="680" fill="#f8fafc" font-size="150" font-weight="700" letter-spacing="-4"
+          data-field="headline" data-fit="1560"></text>
+
+    <rect x="760" y="760" width="400" height="5" fill="#38bdf8" opacity="0.7"/>
+
+    <text x="960" y="880" fill="#94a3b8" font-size="46"
+          data-field="detail" data-label="Line underneath" data-fit="1500">Sign in at reception · Wi-Fi details on request</text>
+    <text x="960" y="960" fill="#94a3b8" font-size="38" opacity="0.75"
+          data-field="footnote" data-label="Footnote" data-fit="1500">Elevators are to your left</text>
+  </g>
+</svg>

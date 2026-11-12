@@ -1,0 +1,135 @@
+/* --- dates -----------------------------------------------------------------
+ *
+ * The tab's own list and form, plus the two bits of chrome its editors use:
+ * the accent swatches and the date checklist on a countdown slide.
+ */
+
+/* --- dates page ------------------------------------------------------------ */
+
+.datelist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.datelist__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* No vertical padding: the accent bar below stretches to the content box, so
+     any here leaves it floating short of the row's rounded corners instead of
+     being the row's edge. The row's height comes from the button's padding. */
+  padding: 0 8px 0 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.datelist__item.is-selected {
+  border-color: var(--accent);
+}
+
+.datelist__item.is-past {
+  opacity: 0.55;
+}
+
+/* Full height, and `overflow: hidden` on the row rounds its ends to match the
+   corner radius — the same reasoning as the accent on a numbers card. */
+.datelist__swatch {
+  width: 5px;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.datelist__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  /* Carries the row's height, now that the row itself has no vertical padding. */
+  padding: 12px 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.datelist__meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.datelist__label {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swatches {
+  display: flex;
+  gap: 8px;
+}
+
+.swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.swatch.is-selected {
+  border-color: var(--fg);
+}
+
+.checklist {
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.checklist__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.checklist__item:hover {
+  background: var(--surface-2);
+}
+
+.checklist__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.checklist__label {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.checklist__meta {
+  font-size: 12px;
+  color: var(--muted);
+  flex-shrink: 0;
+}

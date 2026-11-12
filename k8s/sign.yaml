@@ -1,0 +1,165 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sign
+---
+# Uploaded images and videos live in MinIO, not on a volume. Postgres holds the
+# playlist and the object key; `S3_BUCKET` is what switches the app over.
+#
+# The old `sign-media` PersistentVolumeClaim is deliberately no longer declared
+# here. Removing it from this file does not delete it — `kubectl apply` only
+# touches what the file contains — so the bytes stay put until someone removes
+# the claim by hand, which is the right order for a migration you want to be
+# able to walk back. See README, "Moving uploads to MinIO".
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sign
+  namespace: sign
+  labels: { app: sign }
+spec:
+  replicas: 1
+  # One replica, still — but for one reason now rather than two.
+  #
+  # The RWO volume that used to force it is gone with the move to MinIO. What
+  # remains is server-sent events, which fan out in-process: an edit landing on
+  # pod A would never reach a sign holding its SSE stream open on pod B, and
+  # that sign would sit on stale content until its 60s poll caught up. Going
+  # wider means moving the event bus to Postgres LISTEN/NOTIFY first.
+  #
+  # Recreate for the same reason — two pods must not overlap. The sign is built
+  # to keep playing its last playlist across the gap.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: { app: sign }
+  template:
+    metadata:
+      labels: { app: sign }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001 # `app` in docker-base-node
+        runAsGroup: 10001
+        # No fsGroup: nothing is mounted that needs writing to any more. It was
+        # there to make the media PVC writable by uid 10001.
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: app
+          # Substituted by the deploy job — see .gitlab-ci.yml. The literal
+          # registry is a CI variable because this repo is public.
+          image: __SIGN_IMAGE__
+          imagePullPolicy: Always # :latest is a moving tag; the rollout restart is what pulls
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          ports:
+            - containerPort: 3000
+          env:
+            - { name: PORT, value: "3000" }
+            - { name: HOST, value: 0.0.0.0 }
+            - { name: LOG_LEVEL, value: info }
+            - { name: MAX_UPLOAD_MB, value: "512" }
+            - { name: JIRA_CACHE_TTL_SECONDS, value: "120" }
+            # Uploads go to MinIO. Naming a bucket is what selects S3 — with
+            # S3_BUCKET unset the app falls back to a directory, which in a pod
+            # means losing every upload at the next rollout. The other three
+            # are then required, so a half-filled Secret fails at startup
+            # rather than months later when someone looks for a file.
+            - { name: S3_ENDPOINT, value: "http://minio.minio.svc:9000" }
+            - { name: S3_BUCKET, value: "sign" }
+            - { name: S3_REGION, value: "us-east-1" }
+            - name: S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef: { name: sign-s3, key: ACCESS_KEY_ID }
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef: { name: sign-s3, key: ACCESS_SECRET_KEY }
+            - name: DATABASE_URL # CNPG-generated connection string
+              valueFrom:
+                secretKeyRef: { name: sign-pg-app, key: uri }
+            # Jira credentials are optional and out-of-band — see README. Env
+            # wins over anything stored in the settings table, and `optional`
+            # keeps a missing secret from parking the pod in
+            # CreateContainerConfigError before anyone has created it.
+            - name: JIRA_BASE_URL
+              valueFrom:
+                secretKeyRef: { name: sign-jira, key: base-url, optional: true }
+            - name: JIRA_EMAIL
+              valueFrom:
+                secretKeyRef: { name: sign-jira, key: email, optional: true }
+            - name: JIRA_API_TOKEN
+              valueFrom:
+                secretKeyRef: { name: sign-jira, key: api-token, optional: true }
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+          resources:
+            requests: { cpu: 50m, memory: 192Mi }
+            limits: { memory: 640Mi }
+          # Readiness is the real health check: the server only starts listening
+          # once migrations have run, so this also gates the rollout on the DB.
+          readinessProbe:
+            httpGet: { path: /api/health, port: 3000 }
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          # Liveness deliberately does NOT touch Postgres. /api/health runs a
+          # `select 1`, so pointing liveness at it turns a transient DB blip into
+          # a restart loop — exactly when the sign most needs the process to stay
+          # up and keep serving its cached bundle. /sign is a static file.
+          livenessProbe:
+            httpGet: { path: /sign, port: 3000 }
+            initialDelaySeconds: 30
+            periodSeconds: 30
+      volumes:
+        # readOnlyRootFilesystem: true means every writable path is explicit.
+        # This is the only one left; uploads stream straight to MinIO and are
+        # never staged on disk, so a 500 MB video needs no scratch space.
+        - name: tmp
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sign
+  namespace: sign
+spec:
+  selector: { app: sign }
+  ports:
+    - port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sign
+  namespace: sign
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    # Videos go up to MAX_UPLOAD_MB; nginx defaults to 1m and would 413 them
+    # long before the app's own limit had an opinion.
+    nginx.ingress.kubernetes.io/proxy-body-size: 512m
+    # /api/events is a server-sent event stream the sign holds open. The app
+    # heartbeats every 25s, so the 60s default would not actually cut it — but a
+    # long read timeout plus no buffering is what keeps an edit landing on the
+    # wall in about a second.
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-buffering: "off"
+spec:
+  ingressClassName: nginx
+  # Both substituted from $SIGN_HOST by the deploy job, for the same reason as
+  # the image above.
+  tls:
+    - hosts: [__SIGN_HOST__]
+      secretName: sign-tls
+  rules:
+    - host: __SIGN_HOST__
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sign
+                port: { number: 80 }

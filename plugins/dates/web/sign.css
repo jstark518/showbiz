@@ -1,0 +1,163 @@
+/*
+ * Important dates — the sign's stylesheet for this plugin.
+ *
+ * Loaded by the slide renderer, which means it lands after `sign.css` and can
+ * lean on the variables and the `.slide` base it defines. Everything here is
+ * namespaced to the plugin, so nothing in it can reach another slide type.
+ */
+
+/* --- countdown ------------------------------------------------------------ */
+
+.slide--countdown {
+  padding: 5vmin 6vmin;
+  gap: 3vmin;
+}
+
+.countdown__heading {
+  margin: 0;
+  font-size: 5.5vmin;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.countdown__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  flex: 1;
+  min-height: 0;
+}
+
+.countdown__card {
+  display: flex;
+  align-items: center;
+  gap: 3vmin;
+  padding: 2.5vmin 3vmin;
+  background: var(--sign-panel);
+  border-left: 0.8vmin solid var(--sign-accent);
+  border-radius: 1.2vmin;
+  flex: 1;
+  min-height: 0;
+}
+
+.countdown__list--compact .countdown__card {
+  padding: 1.6vmin 2.4vmin;
+}
+
+.countdown__value {
+  display: flex;
+  align-items: baseline;
+  gap: 1vmin;
+  font-weight: 800;
+  font-size: 7vmin;
+  line-height: 1;
+  min-width: 22%;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown__list--compact .countdown__value {
+  font-size: 5.5vmin;
+}
+
+.countdown__unit {
+  font-size: 2.4vmin;
+  font-weight: 600;
+  color: var(--sign-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.countdown__clock {
+  font-size: 5.5vmin;
+  letter-spacing: -0.01em;
+}
+
+.countdown__sep {
+  opacity: 0.5;
+  margin: 0 0.2vmin;
+}
+
+.countdown__body {
+  min-width: 0;
+  flex: 1;
+}
+
+.countdown__label {
+  font-size: 3.6vmin;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.countdown__list--compact .countdown__label {
+  font-size: 2.8vmin;
+}
+
+.countdown__when {
+  font-size: 2.2vmin;
+  color: var(--sign-muted);
+  margin-top: 0.4vmin;
+}
+
+/* Only tappable with a touchscreen: without one there is nothing to drill into. */
+.countdown__card.is-tappable {
+  cursor: pointer;
+}
+
+.countdown__card.is-tappable:active {
+  background: rgba(56, 189, 248, 0.15);
+}
+
+.countdown__description {
+  font-size: 2vmin;
+  color: var(--sign-muted);
+  margin-top: 0.6vmin;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dateview {
+  text-align: center;
+  padding-top: 4vmin;
+}
+
+.dateview__count {
+  font-size: 16vmin;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2vmin;
+}
+
+.dateview__unit {
+  font-size: 4vmin;
+  color: var(--sign-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dateview__label {
+  margin: 3vmin 0 1vmin;
+  font-size: 5vmin;
+}
+
+.dateview__when {
+  margin: 0;
+  font-size: 2.8vmin;
+  color: var(--sign-muted);
+}
+
+.dateview__description {
+  margin: 3vmin auto 0;
+  max-width: 70%;
+  font-size: 2.6vmin;
+  line-height: 1.5;
+}

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Easter</title>
+  <desc>Pastel eggs on a soft ground, with the long weekend spelled out. Light, and secular enough to leave up all week.</desc>
+
+  <!--
+    Pastel, and the one template here where the accent is nearly beside the
+    point: an egg scatter works because the colors differ from each other. So
+    the picker moves two of the eggs and the rule under the headline, and the
+    rest keep the palette they were drawn in.
+
+    Each egg is a path plus its own decoration, wrapped so the wrapper carries
+    the placement and the animated child carries only the motion.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#ecfdf5"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.2">
+    <circle data-animate="breathe" cx="1700" cy="200" r="310" fill="#fbcfe8"/>
+    <circle data-animate="breathe" data-animate-delay="3" cx="220" cy="900" r="290" fill="#a7f3d0"/>
+  </g>
+
+  <g opacity="0.95">
+    <g transform="translate(250 270) scale(2.6)">
+      <g data-animate="drift" data-animate-delay="1">
+        <path fill="#f9a8d4" data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+              data-paint-swatch="#f9a8d4 #a7f3d0 #bfdbfe #fde68a #ddd6fe #fdba74"
+              d="M0-28c13 0 20 16 20 28 0 15-9 26-20 26S-20 15-20 0c0-12 7-28 20-28z"/>
+        <path stroke="#ffffff" stroke-width="4" stroke-opacity="0.75" fill="none" d="M-19-4h38M-20 8h40"/>
+      </g>
+    </g>
+    <g transform="translate(1680 300) scale(2.2)">
+      <g data-animate="drift" data-animate-delay="3">
+        <path fill="#bfdbfe" d="M0-28c13 0 20 16 20 28 0 15-9 26-20 26S-20 15-20 0c0-12 7-28 20-28z"/>
+        <g fill="#ffffff" fill-opacity="0.8">
+          <circle cx="-8" cy="-8" r="3.4"/>
+          <circle cx="6" cy="0" r="3.4"/>
+          <circle cx="-4" cy="10" r="3.4"/>
+        </g>
+      </g>
+    </g>
+    <g transform="translate(1720 800) scale(1.9)">
+      <g data-animate="drift" data-animate-delay="5">
+        <path fill="#fde68a" d="M0-28c13 0 20 16 20 28 0 15-9 26-20 26S-20 15-20 0c0-12 7-28 20-28z"/>
+        <path stroke="#ffffff" stroke-width="4" stroke-opacity="0.8" fill="none" d="M-18-6 0-14l18 8M-20 6 0-2l20 8"/>
+      </g>
+    </g>
+    <g transform="translate(300 830) scale(2)">
+      <g data-animate="drift" data-animate-delay="6">
+        <path fill="#a7f3d0" data-paint-field="accent" data-paint="fill"
+              d="M0-28c13 0 20 16 20 28 0 15-9 26-20 26S-20 15-20 0c0-12 7-28 20-28z"/>
+        <path stroke="#ffffff" stroke-width="4" stroke-opacity="0.8" fill="none" d="M-19-4h38M-20 8h40"/>
+      </g>
+    </g>
+    <g transform="translate(560 180) scale(1.2)" opacity="0.8">
+      <path data-animate="drift" data-animate-delay="2" fill="#ddd6fe"
+            d="M0-28c13 0 20 16 20 28 0 15-9 26-20 26S-20 15-20 0c0-12 7-28 20-28z"/>
+    </g>
+    <g transform="translate(1370 170) scale(1.1)" opacity="0.8">
+      <path data-animate="drift" data-animate-delay="4" fill="#fdba74"
+            d="M0-28c13 0 20 16 20 28 0 15-9 26-20 26S-20 15-20 0c0-12 7-28 20-28z"/>
+    </g>
+    <g transform="translate(900 960) scale(1.1)" opacity="0.8">
+      <path data-animate="drift" data-animate-delay="5" fill="#bfdbfe"
+            d="M0-28c13 0 20 16 20 28 0 15-9 26-20 26S-20 15-20 0c0-12 7-28 20-28z"/>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text data-animate="fade" x="960" y="330" font-size="36" font-weight="700" letter-spacing="16" fill="#db2777"
+          data-field="eyebrow" data-label="Kicker" data-fit="1400">HAPPY EASTER</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="960" y="510" font-size="130" font-weight="700" letter-spacing="-4" fill="#0f172a"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1560">A long weekend,</text>
+    <text data-animate="rise" data-animate-delay="2" x="960" y="640" font-size="130" font-weight="700" letter-spacing="-4" fill="#0f172a"
+          data-field="headline" data-fit="1560">and then some chocolate</text>
+
+    <rect data-animate="sweep" data-animate-delay="3" x="860" y="700" width="200" height="8" rx="4" fill="#f9a8d4"
+          data-paint-field="accent" data-paint="fill"/>
+
+    <text data-animate="rise" data-animate-delay="4" x="960" y="810" font-size="46" font-weight="500" fill="#334155"
+          data-field="note" data-label="A line underneath" data-fit="1560">The office is closed Friday and Monday. Back Tuesday morning.</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="960" y="900" font-size="34" fill="#64748b"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1560">April 5, 2026</text>
+  </g>
+</svg>

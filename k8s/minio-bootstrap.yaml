@@ -1,0 +1,79 @@
+# Gives this app its own bucket, user and policy on the cluster MinIO.
+#
+# Modelled on the `minio-bootstrap` that deploys MinIO itself on this cluster —
+# same image, same shape, same reasoning. Do not invent a different one here.
+#
+# It runs in the **minio** namespace, not `sign`, because that is where the
+# `minio-root` Secret lives and Kubernetes has no cross-namespace Secret
+# reference. Nothing sensitive appears in this file or in a CI log as a result:
+# both credentials arrive as secretKeyRefs.
+#
+# The Secret it reads the app's key from is created by the deploy job before
+# this is applied — see .gitlab-ci.yml. A Job's pod template is immutable, so
+# that job deletes this before applying it, which is what makes re-running it
+# idempotent.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sign-bootstrap
+  namespace: minio
+spec:
+  backoffLimit: 6
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: mc
+          # Pinned, and the same tag the cluster's own MinIO bootstrap uses — an
+          # image this cluster already pulls is one it can pull.
+          image: quay.io/minio/mc:RELEASE.2025-08-13T08-35-41Z
+          env:
+            - name: ROOT_USER
+              valueFrom: { secretKeyRef: { name: minio-root, key: MINIO_ROOT_USER } }
+            - name: ROOT_PASSWORD
+              valueFrom: { secretKeyRef: { name: minio-root, key: MINIO_ROOT_PASSWORD } }
+            - name: APP_KEY
+              valueFrom: { secretKeyRef: { name: sign-s3, key: ACCESS_KEY_ID } }
+            - name: APP_SECRET
+              valueFrom: { secretKeyRef: { name: sign-s3, key: ACCESS_SECRET_KEY } }
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -eu
+              # The Job can start before MinIO is serving; wait rather than fail
+              # and rely on backoff, which turns a 10s wait into minutes.
+              until mc alias set local http://minio:9000 "$ROOT_USER" "$ROOT_PASSWORD" >/dev/null 2>&1; do
+                echo "waiting for minio..."; sleep 3
+              done
+
+              echo "==> bucket"
+              mc mb --ignore-existing local/sign
+              # Versioning turns an accidental overwrite into a recoverable one.
+              # Regenerating a template image writes a new object rather than
+              # replacing one, so this is cheap insurance rather than churn.
+              mc version enable local/sign
+
+              echo "==> user + policy (already-exists is not an error here)"
+              mc admin user add local "$APP_KEY" "$APP_SECRET" || true
+
+              # Scoped to the one bucket. Named `sign-bucket` rather than
+              # anything MinIO already means something by: reusing a built-in
+              # (readonly, readwrite, writeonly, consoleAdmin, diagnostics) or a
+              # console SSO policy (read, write, admin) silently redefines it
+              # for every user of the cluster.
+              cat > /tmp/policy.json <<'JSON'
+              {
+                "Version": "2012-10-17",
+                "Statement": [{
+                  "Effect": "Allow",
+                  "Action": ["s3:*"],
+                  "Resource": ["arn:aws:s3:::sign", "arn:aws:s3:::sign/*"]
+                }]
+              }
+              JSON
+              mc admin policy create local sign-bucket /tmp/policy.json || true
+              mc admin policy attach local sign-bucket --user "$APP_KEY" || true
+
+              echo "==> done"
+              mc ls local/sign

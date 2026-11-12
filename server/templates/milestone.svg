@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>One big number</title>
+  <desc>A single figure at the size of the room, with what it counts and when it was taken. For a milestone, a total, a streak.</desc>
+
+  <!--
+    A light template, and the loudest. Everything on it exists to get one
+    number read from the far end of a corridor, so there is exactly one thing
+    competing for the eye and it is enormous.
+
+    "As of" is a date field rather than typed text: a stale number is the whole
+    risk with a slide like this, and a date nobody has to remember to rewrite
+    is the cheapest guard against one.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eceff4"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.2">
+    <circle cx="1640" cy="920" r="360" fill="#4ade80"/>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text data-animate="fade" x="150" y="196" font-size="34" font-weight="700" letter-spacing="12" fill="#4ade80"
+          data-field="eyebrow" data-label="Kicker" data-fit="1620"
+          data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+          data-paint-swatch="#4ade80 #38bdf8 #facc15 #f87171 #a78bfa #f472b6">SINCE WE STARTED COUNTING</text>
+
+    <text data-animate="pop" data-animate-delay="1" x="140" y="580" fill="#0f172a" font-size="330" font-weight="700" letter-spacing="-12"
+          data-field="value" data-label="The number"
+          data-hint="Include the unit if it needs one — 1,284 or 99.98% or £14k." data-fit="1620">12,480</text>
+
+    <text data-animate="rise" data-animate-delay="2" x="150" y="690" fill="#1e293b" font-size="76" font-weight="600"
+          data-field="label" data-label="What it counts" data-fit="1620">cups of coffee</text>
+
+    <rect data-animate="sweep" data-animate-delay="3" x="150" y="754" width="1620" height="4" fill="#4ade80" fill-opacity="0.55"
+          data-paint-field="accent" data-paint="fill"/>
+
+    <text data-animate="rise" data-animate-delay="4" x="150" y="836" fill="#475569" font-size="42"
+          data-field="note" data-label="A line underneath" data-fit="1620">Roughly nine a day each, which explains a lot</text>
+
+    <text x="150" y="920" fill="#64748b" font-size="34"
+          data-field="asOf" data-type="date" data-label="As of" data-part="date"
+          data-hint="Stamped on the artwork, so nobody has to wonder how old the number is."
+          data-fit="1620">November 3, 2026</text>
+  </g>
+</svg>

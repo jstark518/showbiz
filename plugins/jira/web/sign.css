@@ -1,0 +1,1087 @@
+/*
+ * Jira — the sign's stylesheet for this plugin.
+ *
+ * Loaded by the slide renderer, which means it lands after `sign.css` and can
+ * lean on the variables and the `.slide` base it defines. Everything here is
+ * namespaced to the plugin, so nothing in it can reach another slide type.
+ */
+
+/* --- Jira dashboard ------------------------------------------------------- */
+
+.slide--jira {
+  padding: 4vmin 5vmin;
+  gap: 2.4vmin;
+}
+
+.jira__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2vmin;
+}
+
+.jira__heading {
+  margin: 0;
+  font-size: 5vmin;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.jira__meta {
+  display: flex;
+  align-items: center;
+  gap: 1.2vmin;
+  font-size: 1.8vmin;
+  color: var(--sign-muted);
+}
+
+.jira__badge--stale {
+  padding: 0.4vmin 1vmin;
+  border-radius: 0.6vmin;
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.jira__summary {
+  display: flex;
+  align-items: center;
+  gap: 4vmin;
+}
+
+.jira__total {
+  display: flex;
+  align-items: baseline;
+  gap: 1vmin;
+}
+
+.jira__total-value {
+  font-size: 8vmin;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.jira__total-label {
+  font-size: 2.2vmin;
+  color: var(--sign-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.jira__counts {
+  display: flex;
+  gap: 3vmin;
+}
+
+.jira__count {
+  display: flex;
+  flex-direction: column;
+}
+
+.jira__count-value {
+  font-size: 4vmin;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.jira__count--todo .jira__count-value {
+  color: var(--status-todo);
+}
+.jira__count--in_progress .jira__count-value {
+  color: var(--status-in_progress);
+}
+.jira__count--done .jira__count-value {
+  color: var(--status-done);
+}
+
+.jira__count-label {
+  font-size: 1.8vmin;
+  color: var(--sign-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.jira__progress {
+  display: flex;
+  align-items: center;
+  gap: 2vmin;
+}
+
+.jira__progress-track {
+  flex: 1;
+  display: flex;
+  height: 2vmin;
+  border-radius: 1vmin;
+  overflow: hidden;
+  background: var(--sign-panel);
+}
+
+.jira__progress-fill--done {
+  background: var(--status-done);
+}
+.jira__progress-fill--in_progress {
+  background: var(--status-in_progress);
+}
+.jira__progress-fill--todo {
+  background: var(--status-todo);
+}
+
+.jira__progress-label {
+  font-size: 2.2vmin;
+  font-weight: 600;
+  color: var(--sign-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.jira__columns {
+  display: flex;
+  gap: 4vmin;
+  flex: 1;
+  min-height: 0;
+  /* A sprint band above eats enough height that a full issue list would run off
+     the bottom of the panel and under the nav bar. Clip it here rather than
+     letting rows render off-slide. */
+  overflow: hidden;
+}
+
+.jira__groups {
+  flex: 0 0 32%;
+  min-width: 0;
+}
+
+.jira__issues,
+.jira__issue-list--flush {
+  /*
+   * A vertical swipe scrolls the list. `pan-y` hands vertical panning to the
+   * browser, which scrolls far better than anything reimplemented in JS, while
+   * leaving horizontal movement to the slideshow's own swipe handler — so
+   * dragging sideways still changes slide, from right here on the list.
+   */
+  overflow-y: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  /* Don't let a flick that reaches the end of the list scroll anything else. */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Fades the last row out where the list is taller than the space, so a
+     clipped row reads as "there is more" rather than as a rendering fault. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 92%, transparent 100%);
+}
+
+/* A scrollbar on a wall panel is noise; the fade is the affordance. */
+.jira__issues::-webkit-scrollbar,
+.jira__issue-list--flush::-webkit-scrollbar {
+  display: none;
+}
+
+.jira__issues {
+  flex: 1;
+  min-width: 0;
+}
+
+.jira__section-title {
+  margin: 0 0 1.2vmin;
+  font-size: 1.8vmin;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sign-muted);
+}
+
+.jira__group-list,
+.jira__issue-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1vmin;
+}
+
+.jira__group,
+.jira__issue {
+  display: flex;
+  align-items: center;
+  gap: 1.4vmin;
+  padding: 1.1vmin 1.6vmin;
+  background: var(--sign-panel);
+  border-radius: 0.8vmin;
+  font-size: 2.1vmin;
+  min-width: 0;
+}
+
+.jira__group-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jira__group-count {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.jira__issue-key {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  color: var(--sign-accent);
+}
+
+.jira__issue-summary {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jira__issue-due,
+.jira__issue-assignee {
+  flex-shrink: 0;
+  font-size: 1.7vmin;
+  color: var(--sign-muted);
+}
+
+.jira__dot {
+  width: 1.2vmin;
+  height: 1.2vmin;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--status-unknown);
+}
+
+.jira__dot--todo {
+  background: var(--status-todo);
+}
+.jira__dot--in_progress {
+  background: var(--status-in_progress);
+}
+.jira__dot--done {
+  background: var(--status-done);
+}
+
+.jira__avatar {
+  width: 2.4vmin;
+  height: 2.4vmin;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.jira__due-soon {
+  display: flex;
+  align-items: center;
+  gap: 2vmin;
+  padding-top: 1.6vmin;
+  border-top: 1px solid var(--sign-line);
+  font-size: 1.9vmin;
+  color: var(--sign-muted);
+  overflow: hidden;
+}
+
+.jira__due-soon-label {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: #fbbf24;
+  flex-shrink: 0;
+}
+
+.jira__due-soon-item strong {
+  color: var(--sign-fg);
+}
+
+.jira__error {
+  font-size: 1.8vmin;
+  color: #fca5a5;
+}
+
+/* --- sprint band and burndown --------------------------------------------- */
+
+.sprint {
+  margin-bottom: 1.6vmin;
+  padding: 1.4vmin 2vmin 1.2vmin;
+  background: var(--sign-panel);
+  border-radius: 1vmin;
+}
+
+.sprint__facts {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.sprint__window {
+  font-size: 3vmin;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.sprint__arrow {
+  margin: 0 1vmin;
+  color: var(--sign-muted);
+}
+
+.sprint__remaining {
+  margin-left: 1.6vmin;
+  font-size: 2vmin;
+  font-weight: 600;
+  color: var(--sign-accent);
+}
+
+.sprint__stat {
+  text-align: right;
+}
+
+.sprint__stat-value {
+  display: block;
+  font-size: 3vmin;
+  font-weight: 700;
+}
+
+.sprint__stat-unit {
+  margin-left: 0.8vmin;
+  font-size: 1.9vmin;
+  font-weight: 600;
+  color: var(--sign-muted);
+}
+
+.sprint__stat-sub {
+  display: block;
+  font-size: 1.7vmin;
+  color: var(--sign-muted);
+}
+
+.sprint__goal {
+  margin: 0.8vmin 0 0;
+  font-size: 1.9vmin;
+  color: var(--sign-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Stretched to the band's width; strokes stay even because they opt out of the
+   viewBox scaling, which `preserveAspectRatio: none` would otherwise distort. */
+.burndown {
+  display: block;
+  width: 100%;
+  height: 9vmin;
+  margin-top: 1vmin;
+  overflow: visible;
+}
+
+.burndown__ideal,
+.burndown__actual,
+.burndown__today {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.burndown__ideal {
+  stroke: var(--sign-muted);
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  opacity: 0.6;
+}
+
+.burndown__actual {
+  stroke: var(--sign-accent);
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.burndown__today {
+  stroke: var(--sign-fg);
+  stroke-width: 1.5;
+  opacity: 0.35;
+}
+
+/* --- epic health ---------------------------------------------------------- */
+
+/*
+ * A traffic light: green is fine, amber means watch it, red means act. Off
+ * track was orange before, which read as "a slightly worse amber" from across
+ * a room rather than as a stop.
+ *
+ * Overdue is a deeper red than off track so the two stay distinguishable at
+ * distance — it is the one state where the date has already passed.
+ *
+ * Complete is deliberately outside the stoplight. It is not a health verdict,
+ * and painting a finished epic green makes it indistinguishable at a glance
+ * from a live one that is going well.
+ */
+:root {
+  --health-on_track: #22c55e;
+  --health-at_risk: #f59e0b;
+  --health-off_track: #ef4444;
+  --health-overdue: #b91c1c;
+  --health-complete: #38bdf8;
+  --health-unknown: #64748b;
+  /* The deep overdue red is too dark to set text in on a dark panel. */
+  --health-alert-text: #f87171;
+}
+
+.health {
+  flex-shrink: 0;
+  padding: 0.4vmin 1.2vmin;
+  border-radius: 0.6vmin;
+  font-size: 1.6vmin;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: #0b1020;
+}
+
+.health--large {
+  font-size: 2.2vmin;
+  padding: 0.8vmin 1.8vmin;
+}
+
+.health--on_track { background: var(--health-on_track); }
+.health--at_risk { background: var(--health-at_risk); }
+.health--complete { background: var(--health-complete); }
+.health--unknown { background: var(--health-unknown); color: #f8fafc; }
+
+/* Dark text on a saturated red is unreadable across a room; white is not. */
+.health--off_track {
+  background: var(--health-off_track);
+  color: #fff;
+}
+
+.health--overdue {
+  background: var(--health-overdue);
+  color: #fff;
+}
+
+/*
+ * A ring pinging outward from the badge, rather than a flash of the row or a
+ * fade of the label: the text stays at full opacity and legible the whole time,
+ * and it is the motion that carries across the office.
+ *
+ * The tempo encodes the severity — at risk breathes, off track and overdue
+ * beat about twice as fast — so someone can rank two badges without reading
+ * either. Separate keyframes per state rather than one parameterised by a
+ * custom property, because the player's Chromium is old enough not to be worth
+ * the bet.
+ */
+@keyframes health-ping-at_risk {
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+  70% { box-shadow: 0 0 0 1.6vmin rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+@keyframes health-ping-off_track {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8); }
+  70% { box-shadow: 0 0 0 1.9vmin rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+@keyframes health-ping-overdue {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.9); }
+  70% { box-shadow: 0 0 0 1.9vmin rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.health--at_risk {
+  animation: health-ping-at_risk 2.6s ease-out infinite;
+}
+
+.health--off_track {
+  animation: health-ping-off_track 1.4s ease-out infinite;
+}
+
+.health--overdue {
+  animation: health-ping-overdue 1.4s ease-out infinite;
+}
+
+/* Work done, with a notch showing how much of the schedule has been used.
+   Fill short of the notch is the "behind" signal, readable without numbers. */
+.epicbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5vmin;
+  flex: 1;
+  min-width: 0;
+}
+
+.epicbar__track {
+  position: relative;
+  flex: 1;
+  height: 1.8vmin;
+  border-radius: 0.9vmin;
+  background: var(--sign-panel);
+  overflow: hidden;
+}
+
+.epicbar__fill {
+  height: 100%;
+  border-radius: 0.9vmin 0 0 0.9vmin;
+  transition: width 400ms ease;
+}
+
+.epicbar__fill--on_track { background: var(--health-on_track); }
+.epicbar__fill--at_risk { background: var(--health-at_risk); }
+.epicbar__fill--off_track { background: var(--health-off_track); }
+.epicbar__fill--overdue { background: var(--health-overdue); }
+.epicbar__fill--complete { background: var(--health-complete); }
+.epicbar__fill--unknown { background: var(--health-unknown); }
+
+.epicbar__marker {
+  position: absolute;
+  top: -0.3vmin;
+  bottom: -0.3vmin;
+  width: 0.35vmin;
+  background: var(--sign-fg);
+  opacity: 0.85;
+  transform: translateX(-50%);
+}
+
+.epicbar__label {
+  font-size: 1.9vmin;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-width: 5ch;
+  text-align: right;
+}
+
+/* --- epic portfolio list -------------------------------------------------- */
+
+.slide--epics,
+.slide--epic {
+  padding: 4vmin 5vmin;
+  gap: 2vmin;
+}
+
+.epiclist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4vmin;
+  flex: 1;
+  min-height: 0;
+}
+
+.epicrow {
+  background-color: var(--sign-panel);
+  border-radius: 1vmin;
+  border-left: 1.1vmin solid var(--health-unknown);
+  /*
+   * The verdict is carried by the edge and a wash bleeding inward from it,
+   * not by a halo around the whole row.
+   *
+   * A glow was here before, and at 1.4vmin of blur it rendered as a hairline
+   * outline rather than as light — so every row read as a boxed card with a
+   * colored ring, and five of them together were a page of boxes. The edge is
+   * thicker now to do that job on its own, and the wash extends it into the
+   * row instead of tracing around it.
+   *
+   * Written as an rgba per state rather than derived from --health-*: a
+   * gradient stop needs an alpha, and color-mix() lands nowhere near the
+   * Chromium a BrightSign ships.
+   */
+  --health-wash: transparent;
+  background-image: linear-gradient(90deg, var(--health-wash), transparent 45%);
+  overflow: hidden;
+}
+
+/*
+ * Alpha climbs with severity, so a wall of epics still ranks itself. Static,
+ * unlike the badge: the pill's ping is what catches an eye crossing the room,
+ * and a second moving element competes with it instead of adding to it.
+ *
+ * Healthy and finished epics get no wash at all. Tinting every row is how the
+ * ranking gets lost — if all five are colored, none of them is the one to
+ * look at.
+ */
+.epicrow--at_risk {
+  border-left-color: var(--health-at_risk);
+  --health-wash: rgba(245, 158, 11, 0.14);
+}
+
+.epicrow--off_track {
+  border-left-color: var(--health-off_track);
+  --health-wash: rgba(239, 68, 68, 0.18);
+}
+
+.epicrow--overdue {
+  border-left-color: var(--health-overdue);
+  --health-wash: rgba(185, 28, 28, 0.24);
+}
+
+.epicrow--on_track {
+  border-left-color: var(--health-on_track);
+}
+
+.epicrow--complete {
+  border-left-color: var(--health-complete);
+}
+
+/*
+ * Only the two red states get a moving accent bar. At risk keeps its badge
+ * ping and nothing more — if everything moves, nothing stands out, and the
+ * point of the portfolio view is that the worst epic wins your attention.
+ */
+@keyframes epicrow-alert-off_track {
+  0%,
+  100% { border-left-color: #ef4444; }
+  50% { border-left-color: #fca5a5; }
+}
+
+@keyframes epicrow-alert-overdue {
+  0%,
+  100% { border-left-color: #b91c1c; }
+  50% { border-left-color: #ef4444; }
+}
+
+.epicrow--off_track {
+  animation: epicrow-alert-off_track 1.4s ease-in-out infinite;
+}
+
+.epicrow--overdue {
+  animation: epicrow-alert-overdue 1.4s ease-in-out infinite;
+}
+
+/* A sign in a room where someone has asked for less motion still has to rank
+   its epics, so the colors and the ordering carry it on their own. */
+@media (prefers-reduced-motion: reduce) {
+  .health--at_risk,
+  .health--off_track,
+  .health--overdue,
+  .epicrow--off_track,
+  .epicrow--overdue {
+    animation: none;
+  }
+}
+
+.epicrow__button {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1vmin;
+  padding: 1.8vmin 2.4vmin;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.epicrow.is-tappable .epicrow__button {
+  cursor: pointer;
+}
+
+.epicrow.is-tappable:active {
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.epicrow__head {
+  display: flex;
+  align-items: center;
+  gap: 1.5vmin;
+  min-width: 0;
+}
+
+.epicrow__key {
+  font-weight: 700;
+  color: var(--sign-accent);
+  font-size: 2.1vmin;
+  flex-shrink: 0;
+}
+
+.epicrow__summary {
+  flex: 1;
+  min-width: 0;
+  font-size: 2.4vmin;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.epicrow__meta {
+  display: flex;
+  align-items: center;
+  gap: 2.4vmin;
+}
+
+/* One quiet string, right-aligned so it stacks under the badge above it into a
+   single right-hand column instead of two edges that nearly line up. */
+.epicrow__facts {
+  font-size: 1.8vmin;
+  color: var(--sign-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+/* --- single epic detail --------------------------------------------------- */
+
+.epicdetail {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4vmin;
+}
+
+.epicdetail__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2vmin;
+}
+
+.epicdetail__key {
+  font-size: 2.2vmin;
+  font-weight: 700;
+  color: var(--sign-accent);
+}
+
+.epicdetail__summary {
+  margin: 0.5vmin 0 0;
+  font-size: 4.2vmin;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.epicdetail__stats {
+  display: flex;
+  gap: 5vmin;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat__label {
+  font-size: 1.6vmin;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--sign-muted);
+  font-weight: 700;
+}
+
+.stat__value {
+  font-size: 3.6vmin;
+  font-weight: 800;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat__value--bad { color: var(--health-alert-text); }
+.stat__value--good { color: var(--health-on_track); }
+
+.stat__sub {
+  font-size: 1.7vmin;
+  color: var(--sign-muted);
+}
+
+/* The verdict sentence is the verdict, so it carries the verdict's color. */
+.epicdetail__reason {
+  margin: 0;
+  font-size: 2.3vmin;
+  font-weight: 600;
+  color: var(--sign-fg);
+}
+
+.epicdetail__reason--on_track { color: var(--health-on_track); }
+.epicdetail__reason--at_risk { color: var(--health-at_risk); }
+.epicdetail__reason--off_track { color: var(--health-off_track); }
+.epicdetail__reason--complete { color: var(--health-complete); }
+.epicdetail__reason--unknown { color: var(--sign-muted); }
+
+/* The deep overdue red is a background color; as text it disappears. */
+.epicdetail__reason--overdue { color: var(--health-alert-text); }
+
+/*
+ * A footnote, not content: it explains where one number came from and should
+ * not compete with the numbers themselves. Parked in the bottom-right corner
+ * of whatever is showing the epic — the slide, or the drill-in overlay.
+ */
+.epicdetail__caveat {
+  position: absolute;
+  right: 3vmin;
+  bottom: 2vmin;
+  max-width: 46%;
+  margin: 0;
+  font-size: 1.6vmin;
+  line-height: 1.35;
+  text-align: right;
+  color: var(--sign-muted);
+  font-style: italic;
+  opacity: 0.75;
+  transition: transform 250ms ease;
+}
+
+/* Absolute positioning is measured from the padding box, so the slide's
+   is-navigating padding does not lift this clear of the nav bar by itself. */
+.sign.is-navigating .epicdetail__caveat {
+  transform: translateY(-11vmin);
+}
+
+.jira__source {
+  margin: 0.4vmin 0 0;
+  font-size: 2vmin;
+  color: var(--sign-muted);
+}
+
+.jira__issue-list--flush {
+  flex: 1;
+  min-height: 0;
+  margin-top: 1vmin;
+}
+
+/* Buttons that only exist to make a row tappable inherit the row's layout. */
+.jira__group-button,
+.jira__issue-button,
+.jira__total {
+  display: flex;
+  align-items: center;
+  gap: 1.4vmin;
+  width: 100%;
+  min-width: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  padding: 0;
+}
+
+.jira__group,
+.jira__issue {
+  padding: 0;
+}
+
+/*
+ * Issue rows carry the same traffic light the epics do, but *not* as a
+ * background wash. A warm color at low alpha over the navy panel comes out
+ * brown, which reads as "dirty" rather than "due soon" and means nothing at a
+ * distance. The signal is a saturated left edge plus, where there is something
+ * to say, a solid due-date chip — a hue and a word, both of which survive the
+ * panel behind them.
+ *
+ * The tone is computed server-side (server/src/jira/issues.ts) so that
+ * "overdue" cannot depend on the player's clock.
+ */
+.jira__issue,
+.drilllist__item {
+  border-left: 0.6vmin solid var(--status-todo);
+}
+
+.jira__issue--in_progress,
+.drilllist__item--in_progress {
+  border-left-color: var(--sign-accent);
+}
+
+.jira__issue--due_soon,
+.drilllist__item--due_soon {
+  border-left-color: var(--health-at_risk);
+}
+
+.jira__issue--overdue,
+.drilllist__item--overdue {
+  border-left-color: var(--health-off_track);
+}
+
+/* Finished work recedes: struck through and dimmed, so the eye lands on what
+   is still open. Done is the one state that wants less attention, not more. */
+.jira__issue--done,
+.drilllist__item--done {
+  border-left-color: var(--health-on_track);
+  opacity: 0.55;
+}
+
+.jira__issue--done .jira__issue-summary,
+.jira__issue--done .jira__issue-key,
+.drilllist__item--done .drilllist__summary,
+.drilllist__item--done .drilllist__key {
+  text-decoration: line-through;
+}
+
+/* --- due date chip -------------------------------------------------------- */
+
+.jira__due {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 1.7vmin;
+  color: var(--sign-muted);
+}
+
+.jira__due-delta {
+  margin-left: 0.8vmin;
+  padding: 0.2vmin 0.9vmin;
+  border-radius: 0.5vmin;
+  font-weight: 700;
+  font-size: 1.6vmin;
+  /* Solid, not tinted — a saturated fill keeps its hue on any background. */
+  background: var(--sign-line);
+  color: var(--sign-fg);
+}
+
+.jira__due--due_soon .jira__due-date {
+  color: var(--health-at_risk);
+}
+
+.jira__due--due_soon .jira__due-delta {
+  background: var(--health-at_risk);
+  color: #0b1020;
+}
+
+.jira__due--overdue .jira__due-date {
+  color: var(--health-off_track);
+}
+
+.jira__due--overdue .jira__due-delta {
+  background: var(--health-off_track);
+  color: #fff;
+}
+
+.jira__group-button,
+.jira__issue-button {
+  padding: 1.1vmin 1.6vmin;
+}
+
+.jira__group-button:not(:disabled),
+.jira__issue-button:not(:disabled),
+.jira__total:not(:disabled) {
+  cursor: pointer;
+}
+
+.jira__group-button:not(:disabled):active,
+.jira__issue-button:not(:disabled):active {
+  background: rgba(56, 189, 248, 0.15);
+}
+
+.jira__total {
+  width: auto;
+  align-items: baseline;
+  gap: 1vmin;
+}
+
+
+
+.drilllist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2vmin;
+}
+
+.drilllist__button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.6vmin;
+  /* Comfortably above the ~9mm minimum for a reliable finger target. */
+  min-height: 8vmin;
+  padding: 1.4vmin 2vmin;
+  background: var(--sign-panel);
+  border: none;
+  border-radius: 0.9vmin;
+  color: inherit;
+  font: inherit;
+  font-size: 2.2vmin;
+  text-align: left;
+  cursor: pointer;
+}
+
+.drilllist__button:active {
+  background: rgba(56, 189, 248, 0.2);
+}
+
+.drilllist__key {
+  font-weight: 700;
+  color: var(--sign-accent);
+  flex-shrink: 0;
+}
+
+.drilllist__summary {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drilllist__meta {
+  font-size: 1.8vmin;
+  color: var(--sign-muted);
+  flex-shrink: 0;
+}
+
+.drilllist__chevron {
+  color: var(--sign-muted);
+  flex-shrink: 0;
+}
+
+.issueview__head {
+  display: flex;
+  align-items: center;
+  gap: 2vmin;
+}
+
+.issueview__key {
+  font-size: 3vmin;
+  font-weight: 800;
+  color: var(--sign-accent);
+}
+
+.issueview__status {
+  padding: 0.5vmin 1.5vmin;
+  border-radius: 0.6vmin;
+  font-size: 2vmin;
+  font-weight: 600;
+  background: var(--sign-panel);
+}
+
+.issueview__status--in_progress { color: var(--status-in_progress); }
+.issueview__status--done { color: var(--status-done); }
+.issueview__status--todo { color: var(--status-todo); }
+
+.issueview__summary {
+  margin: 1.5vmin 0 3vmin;
+  font-size: 4.4vmin;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.issueview__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(28vmin, 1fr));
+  gap: 2.5vmin;
+  margin: 0;
+}
+
+.fact dt {
+  font-size: 1.7vmin;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--sign-muted);
+  font-weight: 700;
+}
+
+.fact dd {
+  margin: 0.4vmin 0 0;
+  font-size: 2.6vmin;
+  font-weight: 600;
+}
+
+.issueview__link {
+  margin-top: 4vmin;
+  font-size: 1.8vmin;
+  color: var(--sign-muted);
+  word-break: break-all;
+}

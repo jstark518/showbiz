@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Christmas</title>
+  <desc>A tree, falling snow and the dates the office is closed. Deep green and gold, written for the last week of December.</desc>
+
+  <!--
+    The closure dates matter more than the greeting here — this is the panel
+    people photograph on their way out — so the note and the date get a full
+    line each rather than sharing one.
+
+    Snow `drift`s on staggered negative delays: flakes moving in unison read as
+    one sheet sliding down the screen. Every flake is a plain circle, because
+    six-armed snowflakes at this size are a smear.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#052e21"/>
+      <stop offset="1" stop-color="#0b3f2c"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.28">
+    <circle data-animate="breathe" cx="1500" cy="560" r="330" fill="#fbbf24"
+            data-paint-field="accent" data-paint="fill" data-paint-label="Accent color"
+            data-paint-swatch="#fbbf24 #ef4444 #f8fafc #86efac #fca5a5 #fde68a"/>
+  </g>
+
+  <!-- Snow. Plain circles at four sizes, already in motion when the slide lands. -->
+  <g fill="#f8fafc" opacity="0.6">
+    <circle data-animate="drift" data-animate-delay="1" cx="180" cy="140" r="9"/>
+    <circle data-animate="drift" data-animate-delay="3" cx="420" cy="250" r="6"/>
+    <circle data-animate="drift" data-animate-delay="5" cx="620" cy="120" r="7"/>
+    <circle data-animate="drift" data-animate-delay="2" cx="300" cy="440" r="5"/>
+    <circle data-animate="drift" data-animate-delay="6" cx="820" cy="300" r="6"/>
+    <circle data-animate="drift" data-animate-delay="4" cx="140" cy="700" r="7"/>
+    <circle data-animate="drift" data-animate-delay="2" cx="560" cy="860" r="5"/>
+    <circle data-animate="drift" data-animate-delay="6" cx="900" cy="960" r="8"/>
+    <circle data-animate="drift" data-animate-delay="3" cx="1180" cy="180" r="6"/>
+    <circle data-animate="drift" data-animate-delay="1" cx="1300" cy="880" r="7"/>
+    <circle data-animate="drift" data-animate-delay="5" cx="1820" cy="320" r="6"/>
+    <circle data-animate="drift" data-animate-delay="4" cx="1760" cy="940" r="9"/>
+  </g>
+
+  <!-- The tree, right of the text. Three tiers, a trunk, a star. -->
+  <g transform="translate(1500 620)">
+    <g fill="#166534">
+      <path data-animate="pop" data-animate-delay="1" d="M0-300 90-170H-90Z"/>
+      <path data-animate="pop" data-animate-delay="2" d="M0-240 130-80H-130Z"/>
+      <path data-animate="pop" data-animate-delay="3" d="M0-160 170 30H-170Z"/>
+    </g>
+    <rect data-animate="rise" data-animate-delay="3" x="-26" y="28" width="52" height="66" rx="8" fill="#7c3f18"/>
+
+    <g transform="translate(0 -318) scale(2.6)">
+      <path data-animate="pop" data-animate-delay="4" fill="#fbbf24" data-paint-field="accent" data-paint="fill"
+            d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+
+    <g data-animate="fade" data-animate-delay="5">
+      <circle cx="-46" cy="-150" r="13" fill="#ef4444"/>
+      <circle cx="52" cy="-96" r="13" fill="#fbbf24" data-paint-field="accent" data-paint="fill"/>
+      <circle cx="-84" cy="-40" r="13" fill="#f8fafc"/>
+      <circle cx="26" cy="-190" r="11" fill="#f8fafc"/>
+      <circle cx="96" cy="-14" r="13" fill="#ef4444"/>
+      <circle cx="-20" cy="-8" r="13" fill="#fbbf24" data-paint-field="accent" data-paint="fill"/>
+      <circle cx="-130" cy="6" r="11" fill="#ef4444"/>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text data-animate="fade" x="150" y="300" font-size="34" font-weight="700" letter-spacing="14" fill="#fbbf24"
+          data-paint-field="accent" data-paint="fill"
+          data-field="eyebrow" data-label="Kicker" data-fit="1000">MERRY CHRISTMAS</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="146" y="460" font-size="122" font-weight="700" letter-spacing="-3" fill="#f0fdf4"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1050">Have a lovely</text>
+    <text data-animate="rise" data-animate-delay="2" x="146" y="582" font-size="122" font-weight="700" letter-spacing="-3" fill="#f0fdf4"
+          data-field="headline" data-fit="1050">break, everyone</text>
+
+    <rect data-animate="sweep" data-animate-delay="3" x="150" y="644" width="200" height="8" rx="4" fill="#ef4444"/>
+
+    <text data-animate="rise" data-animate-delay="4" x="150" y="752" font-size="46" font-weight="600" fill="#dcfce7"
+          data-field="note" data-label="When we close" data-fit="1050">Closed from 2pm on the 24th, back on the 2nd.</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="150" y="850" font-size="36" fill="#86efac"
+          data-field="detail" data-label="A quieter line" data-fit="1050">Anything urgent over the break goes to the on-call number.</text>
+
+    <text data-animate="fade" data-animate-delay="6" x="150" y="940" font-size="32" fill="#4ade80"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1050">December 25, 2026</text>
+  </g>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" data-category="Holidays">
+  <title>Juneteenth</title>
+  <desc>The bursting star on a red and blue ground, for June 19. A federal holiday, so it carries the closure note as well as the greeting.</desc>
+
+  <!--
+    The motif is the Juneteenth flag's: a white star inside a bursting outline,
+    over a field split red and blue. Kept close to it rather than restyled,
+    because a holiday's own flag is not artwork to improvise on.
+
+    The burst is one path of twelve rays so `draw` opens it as a single event.
+    The star behind it pops a beat later, which is the order the shape reads in.
+  -->
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0" stop-color="#132a63"/>
+      <stop offset="0.52" stop-color="#1b3a86"/>
+      <stop offset="0.52" stop-color="#8f1616"/>
+      <stop offset="1" stop-color="#6d1010"/>
+    </linearGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="200"/>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g filter="url(#soft)" opacity="0.2">
+    <circle data-animate="breathe" cx="1480" cy="540" r="340" fill="#f8fafc"/>
+  </g>
+
+  <g transform="translate(1480 540)">
+    <g stroke="#f8fafc" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.9"
+       data-paint-field="accent" data-paint="stroke" data-paint-label="Star color"
+       data-paint-swatch="#f8fafc #fbbf24 #fecaca #bfdbfe #fde68a #ffffff">
+      <path data-animate="draw" pathLength="1"
+            d="M0-120V-230M0 120V230M-120 0H-230M120 0H230M-85-85-163-163M85 85 163 163M-85 85-163 163M85-85 163-163M-62-149-95-227M62 149 95 227M-149 62-227 95M149-62 227-95"/>
+    </g>
+    <g transform="scale(4.6)">
+      <path data-animate="pop" data-animate-delay="2" fill="#f8fafc"
+            data-paint-field="accent" data-paint="fill"
+            d="M0-20 4.7-6.5 19-6.2 7.6 2.5 11.8 16.2 0 8-11.8 16.2-7.6 2.5-19-6.2-4.7-6.5Z"/>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text data-animate="fade" x="150" y="300" font-size="34" font-weight="700" letter-spacing="14" fill="#fde68a"
+          data-field="eyebrow" data-label="Kicker" data-fit="900">JUNE 19</text>
+
+    <!-- Two elements, one field: the panel wraps what you type across both. -->
+    <text data-animate="rise" data-animate-delay="1" x="146" y="470" font-size="122" font-weight="700" letter-spacing="-3" fill="#f8fafc"
+          data-field="headline" data-label="The headline"
+          data-hint="It wraps across two lines." data-fit="1020">Juneteenth</text>
+    <text data-animate="rise" data-animate-delay="2" x="146" y="596" font-size="122" font-weight="700" letter-spacing="-3" fill="#f8fafc"
+          data-field="headline" data-fit="1020"></text>
+
+    <rect data-animate="sweep" data-animate-delay="3" x="150" y="660" width="200" height="8" rx="4" fill="#fde68a"/>
+
+    <text data-animate="rise" data-animate-delay="4" x="150" y="770" font-size="44" font-weight="500" fill="#f1f5f9"
+          data-field="note" data-label="A line underneath" data-fit="1020">Marking the end of slavery in the United States.</text>
+
+    <text data-animate="fade" data-animate-delay="5" x="150" y="880" font-size="36" fill="#fecaca"
+          data-field="detail" data-label="What it means for the office" data-fit="1020">The office is closed Friday. Back Monday morning.</text>
+
+    <text data-animate="fade" data-animate-delay="6" x="150" y="960" font-size="32" fill="#fca5a5"
+          data-field="when" data-type="date" data-label="Date" data-part="date"
+          data-fit="1020">June 19, 2026</text>
+  </g>
+</svg>

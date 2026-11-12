@@ -1,0 +1,70 @@
+services:
+  db:
+    image: postgres:18.2-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-shwobiz}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-shwobiz}
+      # Pin PGDATA to a subdirectory of the mount. The official image has moved
+      # its default between major versions; naming it here keeps the volume
+      # layout stable across upgrades.
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-shwobiz} -d ${POSTGRES_DB:-shwobiz}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  # Hands the uploads volume to the uid the app runs as, before it starts.
+  #
+  # Docker only seeds a named volume's ownership from the image when it creates
+  # an empty one. A volume that already exists keeps whatever uid it was made
+  # with, so upgrading a running install across a change of base image — which
+  # took this app from uid 1000 to 10001 — leaves it unable to write its own
+  # uploads, with a healthy container and EACCES on every upload. The chown in
+  # the Dockerfile cannot help: it applies to the image path the volume is then
+  # mounted over.
+  #
+  # Kubernetes has no such problem; `fsGroup` on the PVC covers it there.
+  media-init:
+    image: busybox:1.38.0-musl
+    user: "0:0"
+    # 10001 is the `app` user in the runtime base image — see the Dockerfile.
+    command: ["sh", "-c", "chown -R 10001:10001 /data/media"]
+    restart: "no"
+    volumes:
+      - media-data:/data/media
+
+  app:
+    build:
+      context: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      media-init:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgres://shwobiz:${POSTGRES_PASSWORD}@db:5432/shwobiz}
+      PORT: "3000"
+      HOST: 0.0.0.0
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      MEDIA_DIR: /data/media
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-512}
+      JIRA_BASE_URL: ${JIRA_BASE_URL:-}
+      JIRA_EMAIL: ${JIRA_EMAIL:-}
+      JIRA_API_TOKEN: ${JIRA_API_TOKEN:-}
+      JIRA_CACHE_TTL_SECONDS: ${JIRA_CACHE_TTL_SECONDS:-120}
+    ports:
+      - "3000:3000"
+    volumes:
+      - media-data:/data/media
+
+volumes:
+  db-data:
+  media-data:
