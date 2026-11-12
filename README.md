@@ -9,6 +9,66 @@ lands on the sign within about a second, without touching the player.
 Touch is supported but never required: with no touchscreen the sign is a plain
 autoplaying carousel.
 
+## Quick start
+
+Everything runs in Docker, so there is nothing to install, no database to set
+up and no `.env` to write. All you need is Docker with Compose v2.
+
+```bash
+git clone https://github.com/jstark518/showbiz.git
+```
+
+```bash
+cd showbiz && docker compose up -d --build
+```
+
+The first run pulls the base images and builds, so give it a few minutes; after
+that it starts in seconds. It brings up Postgres, applies the migrations and
+seeds an empty playlist called **Main loop**, already on air. Then open two
+tabs:
+
+| | |
+| --- | --- |
+| **Control panel** | <http://localhost:3000/> — where you build the loop |
+| **Sign** | <http://localhost:3000/sign> — what a screen shows |
+
+### Put something on the screen
+
+On the panel's **Slides** tab, press **+ Template artwork**. The slide is added
+immediately — there is no dialog to fill in — and its editor opens on the right.
+
+Pick anything from **Choose artwork…**; **Shout out** is a good first one. The
+artwork draws straight away with its wording in editable boxes beside it, so
+change the name and the message to whatever you like and press **Save**.
+
+The panel says *"Saved. The sign updates within a second."* Switch to the sign
+tab and it is already there — no reload, nothing to republish. That second is
+the whole point of the app: once a screen is pointed at a URL, nobody touches
+the player again.
+
+Add a few more slides with the other **+** buttons and they play top to bottom,
+then start again.
+
+### When you are done
+
+```bash
+docker compose down -v
+```
+
+That removes the containers and the data. Leave off `-v` to keep your slides
+and uploads for next time.
+
+### Where to go next
+
+| If you want to | Read |
+| --- | --- |
+| Know what a slide can be | [Slide types](#slide-types) |
+| Make artwork without a designer | [Making an image without a designer](#making-an-image-without-a-designer) |
+| Put it on a real screen | [Deploying to a BrightSign](#deploying-to-a-brightsign) |
+| Change ports, credentials or storage | [Running it](#running-it) |
+| Show Jira boards | [Connecting Jira](#connecting-jira) |
+| Add a slide type of your own | [Writing a plugin](#writing-a-plugin) |
+
 ## Slide types
 
 | Type | What it shows |
@@ -258,34 +318,17 @@ the templates; the panel does its own.
 
 ## Running it
 
-Requires Docker with Compose v2. There is nothing to configure:
+[Quick start](#quick-start) is the short version: one command, nothing to
+configure. This section is what you can change once it is up.
 
-```bash
-docker compose up -d --build
-```
-
-- Control panel: <http://localhost:3000/>
-- Sign: <http://localhost:3000/sign>
-
-That is the whole quick start. The database comes up with a local-only
-password baked into [docker-compose.yml](docker-compose.yml) and publishes no
-port, so nothing outside the compose network can reach it. [.env.example](.env.example)
-lists everything you *can* override — including the Postgres credentials and
-Jira — and every line of it is optional. Override `POSTGRES_PASSWORD` and
-`DATABASE_URL` follows it automatically; there is no pair to keep in step by
-hand.
-
-Stop it, keeping your slides and uploads:
-
-```bash
-docker compose down
-```
-
-Start over from an empty database, discarding both:
-
-```bash
-docker compose down -v
-```
+The database comes up with a local-only password baked into
+[docker-compose.yml](docker-compose.yml) and publishes no port, so nothing
+outside the compose network can reach it.
+[.env.example](.env.example) lists everything you *can* override — ports,
+Postgres credentials, upload limits, object storage, Jira — and every line of
+it is optional, so copying it changes nothing until you uncomment something.
+Override `POSTGRES_PASSWORD` and `DATABASE_URL` follows it automatically; there
+is no pair to keep in step by hand.
 
 The panel is the root. A sign is a screen you add on the **Signs** tab, which
 hands back an address of its own to point a player at.
