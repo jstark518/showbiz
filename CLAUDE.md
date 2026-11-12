@@ -17,7 +17,15 @@ docker compose up -d --build app   # rebuild and redeploy just the app
 There are no tests. Verify by running the stack and exercising the real API —
 `curl` the endpoints, or drive the sign in a browser.
 
-Dev without Docker for the app: `docker compose up -d db`, publish 5432, point
+`docker compose up -d --build` takes no configuration — the Postgres
+credentials default to a local-only set in `docker-compose.yml`, and every line
+of `.env.example` is optional. Don't reintroduce a required variable for the
+quick start; a clone that cannot start is the first thing a reader judges.
+Override `POSTGRES_PASSWORD` and `DATABASE_URL` follows it, because each
+component of that URL's default repeats the same default.
+
+Dev without Docker for the app: `docker compose up -d db`, uncomment the `db`
+service's `ports` block (already written, bound to `127.0.0.1`), point
 `DATABASE_URL` at localhost. Panel is `/`, sign is `/sign.html` under Vite.
 
 ## Layout

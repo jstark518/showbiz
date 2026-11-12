@@ -258,14 +258,7 @@ the templates; the panel does its own.
 
 ## Running it
 
-Requires Docker with Compose v2.
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env` — at minimum set `POSTGRES_PASSWORD`, and keep `DATABASE_URL` in
-step with it. Then:
+Requires Docker with Compose v2. There is nothing to configure:
 
 ```bash
 docker compose up -d --build
@@ -273,6 +266,26 @@ docker compose up -d --build
 
 - Control panel: <http://localhost:3000/>
 - Sign: <http://localhost:3000/sign>
+
+That is the whole quick start. The database comes up with a local-only
+password baked into [docker-compose.yml](docker-compose.yml) and publishes no
+port, so nothing outside the compose network can reach it. [.env.example](.env.example)
+lists everything you *can* override — including the Postgres credentials and
+Jira — and every line of it is optional. Override `POSTGRES_PASSWORD` and
+`DATABASE_URL` follows it automatically; there is no pair to keep in step by
+hand.
+
+Stop it, keeping your slides and uploads:
+
+```bash
+docker compose down
+```
+
+Start over from an empty database, discarding both:
+
+```bash
+docker compose down -v
+```
 
 The panel is the root. A sign is a screen you add on the **Signs** tab, which
 hands back an address of its own to point a player at.
@@ -684,8 +697,15 @@ compose and the app on the host:
 docker compose up -d db
 ```
 
-Publish the database port by adding `ports: ["5432:5432"]` to the `db` service,
-point `DATABASE_URL` at `localhost`, then:
+Uncomment the `ports` block on the `db` service in
+[docker-compose.yml](docker-compose.yml) — it is already written, bound to
+`127.0.0.1` so the database stays on your machine — and put this in `.env`:
+
+```bash
+DATABASE_URL=postgres://shwobiz:local-dev-only@localhost:5432/shwobiz
+```
+
+Then:
 
 ```bash
 npm install
