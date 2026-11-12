@@ -17,8 +17,8 @@ import type { AnySlide, MediaAsset } from '../../../../shared/types';
  */
 
 const NOMINAL = { w: 1600, h: 900 };
-const MESSAGE = 'shwobiz:preview';
-const READY = 'shwobiz:preview-ready';
+const MESSAGE = 'showbiz:preview';
+const READY = 'showbiz:preview-ready';
 
 /**
  * Long enough that working through a row of dropdowns is one refresh rather

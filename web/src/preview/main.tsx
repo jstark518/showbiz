@@ -26,8 +26,8 @@ export interface PreviewPayload {
   plugins: PluginSignData;
 }
 
-const MESSAGE = 'shwobiz:preview';
-const READY = 'shwobiz:preview-ready';
+const MESSAGE = 'showbiz:preview';
+const READY = 'showbiz:preview-ready';
 
 function Preview() {
   const [payload, setPayload] = useState<PreviewPayload | null>(null);

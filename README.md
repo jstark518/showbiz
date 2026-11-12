@@ -1,4 +1,4 @@
-# shwobiz
+# showbiz
 
 Digital signage slideshow for a BrightSign player, with a web control panel.
 
@@ -702,7 +702,7 @@ Uncomment the `ports` block on the `db` service in
 `127.0.0.1` so the database stays on your machine — and put this in `.env`:
 
 ```bash
-DATABASE_URL=postgres://shwobiz:local-dev-only@localhost:5432/shwobiz
+DATABASE_URL=postgres://showbiz:local-dev-only@localhost:5432/showbiz
 ```
 
 Then:

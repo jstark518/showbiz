@@ -3,7 +3,7 @@ services:
     image: postgres:18.2-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-shwobiz}
+      POSTGRES_USER: ${POSTGRES_USER:-showbiz}
       # Defaulted so `docker compose up -d` works on a fresh clone with no .env
       # and no decisions. The value says what it is on purpose: this database
       # publishes no port, so nothing outside the compose network can reach it,
@@ -13,7 +13,7 @@ services:
       # The cluster never sees this. There, CloudNativePG generates the
       # password and the app reads DATABASE_URL from the Secret it creates.
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-dev-only}
-      POSTGRES_DB: ${POSTGRES_DB:-shwobiz}
+      POSTGRES_DB: ${POSTGRES_DB:-showbiz}
       # Pin PGDATA to a subdirectory of the mount. The official image has moved
       # its default between major versions; naming it here keeps the volume
       # layout stable across upgrades.
@@ -30,7 +30,7 @@ services:
     #   - "127.0.0.1:5432:5432"
     healthcheck:
       test:
-        ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-shwobiz} -d ${POSTGRES_DB:-shwobiz}"]
+        ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-showbiz} -d ${POSTGRES_DB:-showbiz}"]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -69,8 +69,8 @@ services:
       # Each piece carries the same default as the `db` service above, so
       # overriding POSTGRES_PASSWORD alone keeps the two in step — the old form
       # interpolated a bare ${POSTGRES_PASSWORD} and silently produced
-      # `postgres://shwobiz:@db:5432/shwobiz` when it was unset.
-      DATABASE_URL: ${DATABASE_URL:-postgres://${POSTGRES_USER:-shwobiz}:${POSTGRES_PASSWORD:-local-dev-only}@db:5432/${POSTGRES_DB:-shwobiz}}
+      # `postgres://showbiz:@db:5432/showbiz` when it was unset.
+      DATABASE_URL: ${DATABASE_URL:-postgres://${POSTGRES_USER:-showbiz}:${POSTGRES_PASSWORD:-local-dev-only}@db:5432/${POSTGRES_DB:-showbiz}}
       PORT: "3000"
       HOST: 0.0.0.0
       LOG_LEVEL: ${LOG_LEVEL:-info}
