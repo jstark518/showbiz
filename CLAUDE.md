@@ -280,11 +280,11 @@ pointed at the real `/sign/<playlistId>` instead. Two things it depends on:
 It belongs in a plugin. `plugins/data-table/` is the whole shape in about 700
 lines and is the one to copy.
 
-**The step-by-step is [README.md → Writing a plugin](README.md#writing-a-plugin)**
+**The step-by-step is [docs/writing-a-plugin.md](docs/writing-a-plugin.md)**
 — the six registration points, the contracts, the migration, the helpers. It is
 written to be followed start to finish without reading anything else, so it is
 not repeated here; two copies of the same checklist is how one of them ends up
-wrong. Likewise [Writing a template](README.md#writing-a-template) for the
+wrong. Likewise [docs/writing-a-template.md](docs/writing-a-template.md) for the
 annotated SVGs.
 
 What follows is only the part that is judgement rather than procedure.
@@ -451,7 +451,7 @@ muted by default because players block autoplay with sound.
 
 `git push` to `main` on the GitLab mirror is the deploy — Kaniko builds,
 `kubectl apply`s `k8s/` from inside the cluster, rolls `deploy/sign`. Nothing is
-applied from a laptop. Full runbook in [README.md](README.md).
+applied from a laptop. Full runbook in [docs/cluster.md](docs/cluster.md).
 
 - **Public registries are the committed default; the private ones are overrides
   supplied by CI.** The repo is public, so a private default is a build everyone
@@ -462,7 +462,7 @@ applied from a laptop. Full runbook in [README.md](README.md).
   stage creates uid 10001 when the base lacks it and runs `USER 10001`
   numerically, so the image starts on either base — the public node images stop
   at `node` (uid 1000), and `USER app` against them builds clean and then dies
-  at startup. See [README.md → Registries](README.md#registries).
+  at startup. See [docs/development.md → Registries](docs/development.md#registries).
 - **The committed lockfile must resolve to `registry.npmjs.org`.** `npm ci`
   rewrites a `resolved` URL pointing at the default registry to whatever
   registry is configured, so a public lockfile installs fine from Verdaccio; it
