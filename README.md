@@ -9,6 +9,8 @@ lands on the sign within about a second, without touching the player.
 Touch is supported but never required: with no touchscreen the sign is a plain
 autoplaying carousel.
 
+▶ **[Watch the two-minute tour](docs/showbiz-overview.mp4)**, narrated and captioned.
+
 ![A sign showing templated artwork](docs/images/sign-template.jpg)
 
 ## Quick start
